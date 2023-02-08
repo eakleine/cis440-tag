@@ -6,4 +6,4 @@
 # Abigail Hensel: Developer
 # May Lister: Developer
 # Sally Huang: Developer
-# Ethan Kleiner: Product Owner
+Ethan Kleiner: Product Owner

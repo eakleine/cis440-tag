@@ -4,6 +4,11 @@ let fs = require("fs");
 const { fileURLToPath } = require("url");
 let sqlQuery = '';
 let output = '';
+let account = [];
+let password = [];
+let searchAccount = '';
+let searchPassword = '';
+let file = '';
 
 
 let httpServer = http.createServer(processRequest);
@@ -17,26 +22,37 @@ function processRequest(request, response) {
     let base = "http://" + request.headers['host'];
     let url = new URL(request.url, base);
 
-    // let searchFilmId = url.searchParams.get("movie");
+    searchAccount = url.searchParams.get("account");
+    searchPassword = url.searchParams.get("password");
 
     sqlQuery = `select * from user_testing;`;     
     initializeDB();
+    login_verification();
 
-    response.write('<p>Here is the information you were looking for</p>')
-    response.write(output);
+    if (file =='dashboard.html'){
+        fs.readFile('dashboard.html', function(error, data){
+            if (error){
+                response.writeHead(404)
+                response.write('Error: File not found')
+            } else {
+                response.write(data)
+                response.write(output);
+            }
+            response.end()
+        })
+    } else {
+        fs.readFile('login.html', function(error, data){
+            if (error){
+                response.writeHead(404)
+                response.write('Error: File not found')
+            } else {
+                response.write(data)
+                response.write(output);
+            }
+            response.end()
+        })
+    }
 
-    // instead of writign output on html we can render a new html file
-    // fs.readFile('dashboard.html', function(error, data){
-    //     if (error){
-    //         res.writeHead(404)
-    //         res.write('Error: File not found')
-    //     } else {
-    //         res.write(data)
-    //     }
-    //     res.end()
-    // })
-
-    response.end();
 }
 
 function initializeDB(){
@@ -83,15 +99,41 @@ function processResult(err, result) {
     }
     else {
         console.log(`There were ${result.length} rows returned`);
-        result.forEach(printActor);
-        // we might want to store the result in a dictionary and verify 
-        // user input with the dictionary key-value pair here
+        for (let i = 0; i < result.length; i++) { 
+            console.log(result[i].account, result[i].password)
+            account.push(result[i].account) 
+            password.push(result[i].password)
+        }
+        
+        console.log(account)
+        console.log(password)
+
     } 
 }
 
+function login_verification(){
 
-function printActor(record) {
+    console.log(searchAccount)
+    console.log(searchPassword)
 
-    output = `<p><strong>${record.title}</strong><br><p>${record.description}</p></p>`;
-
+    for (let i = 0; i < account.length; i++){
+        if (searchAccount == account[i]){
+            if (searchPassword == password[i]){
+                // output = `<p>Account exists</p>`
+                file = 'dashboard.html'
+                output = " ";
+            }
+            else{
+                file = 'login.html'
+                output = `<p>Password is not correct</p>`
+            }
+            break;
+        }
+        else {
+            file = 'login.html'
+            output = `<p>Account does not exist</p>`+ `<p>Do you want to create an account?</p>`;
+        }
+    }
 }
+
+

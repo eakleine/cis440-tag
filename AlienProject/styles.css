@@ -1,5 +1,9 @@
 html{
     font-family: 'Dosis', sans-serif;
     background-color: black;
-    color: greenyellow
+    color: greenyellow;
+    text-align: center;
+
+    box-sizing: border-box;
+    margin: auto;
 }

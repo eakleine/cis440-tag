@@ -19,52 +19,48 @@
 
     <main>
         <form method="GET" action="http://localhost:8080">
-            <table>
+            <table class="alienOptions">
+
+                <!-- Aliens -->
                 <tr>
-                    <td class="alienOptions">
+                    <td> 
                         <div>
-                            <label id="TopL" for="a1">
+                            <label id="alien1" for="a1">
                                 <div><img src="" width="500" alt="Alien 1"></div>
                             </label>
                             <input type="radio" name="alienChosen" id="a1" value="" class="">
                         </div>
                     </td>
-                    <td class="alienOptions">
+                    <td>
                         <div>
-                            <label id="TopR" for="a2">
+                            <label id="alien2" for="a2">
                                 <div><img src="" width="500" alt="Alien 2"></div>
                             </label>
                             <input type="radio" name="alienChosen" id="a2" value="" class="">
                         </div>
                     </td>
-                </tr>
-                <tr>
-                    <td class="alienOptions">
+                    <td>
                         <div>
-                            <label id="BotL" for="a3">
+                            <label id="alien3" for="a3">
                                 <div><img src="" width="500" alt="Alien 3"></div>
                             </label>
                             <input type="radio" name="alienChosen" id="a3" value="" class="">
                         </div>
                     </td>
-                    <td class="alienOptions">
-                        <div>
-                            <label id="BotR" for="a4">
-                                <div><img src="" width="500" alt="Alien 4"></div>
-                            </label>
-                            <input type="radio" name="alienChosen" id="a4" value="" class="buttons">
-                        </div>
-                    </td>
                 </tr>
+
+                <!-- Submit -->
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         <input type="submit" id="submit"
                             value="Click to blast off!">
                     </td>
                 </tr>
             </table>
         </form>
+
     </main>
+
 </body>
 
 

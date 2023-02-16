@@ -127,7 +127,7 @@ namespace ProjectTemplate
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into table_value (userid, pass, firstname, lastname, email) " +
+			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email) " +
 				"values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue); SELECT LAST_INSERT_ID();";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());

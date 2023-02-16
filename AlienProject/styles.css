@@ -1,4 +1,4 @@
-html{
+html {
     font-family: 'Dosis', sans-serif;
     background-color: black;
     color: greenyellow;
@@ -10,6 +10,13 @@ html{
     margin-right: auto;
 }
 
-footer{
+nav {
+    background-color: pink;
+    width: auto;
+    height: 50px;
+    color: black;
+}
+s
+footer {
     position: sticky;
 }

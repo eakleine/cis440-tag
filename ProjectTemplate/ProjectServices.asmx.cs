@@ -105,6 +105,8 @@ namespace ProjectTemplate
 				Session["id"] = sqlDt.Rows[0]["id"];
 				// Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
+				// call a function that can connect to database again and store user login time or any details 
+				// into the loginstatus table
 			}
 			//return the result!
 			return success;

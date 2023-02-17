@@ -131,7 +131,8 @@ namespace ProjectTemplate
 			//does is tell mySql server to return the primary key of the last inserted row.
 			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email) " +
 				"values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue); SELECT LAST_INSERT_ID();";
-
+			// ToDo: creating a request table and insert into request table instead of user_database
+			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 

@@ -2,10 +2,91 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title></title>
+	<title>Avatar_Wonderland</title>
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="frontendProcessing.js"></script>
+<!--	<script type="text/javascript" src="frontendProcessing.js"></script>-->
+	<script>
+
+		//resets the logon inputs
+		function clearLogon() {
+			$('#logonId').val("");
+			$('#logonPassword').val("");
+		}
+		function TestButtonHandler() {
+			var webMethod = "ProjectServices.asmx/TestConnection";
+			var parameters = "{}";
+
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					var responseFromServer = msg.d;
+					alert(responseFromServer);
+				},
+				error: function (e) {
+					alert("this code will only execute if javascript is unable to access the webservice");
+				}
+			});
+		}
+		function LogOn(userId, pass) {
+			var webMethod = "ProjectServices.asmx/LogOn";
+			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						//server replied true, so direct the user to the dashboard
+						window.open('dashboard.html', '_self')
+						// TODO: remove the munu function and add a log off button instead
+						// ShowMenu();
+					}
+					else {
+						alert("logon failed");
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
+
+		//logs the user off both at the client and at the server
+		function LogOff() {
+
+			var webMethod = "ProjectServices.asmx/LogOff";
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						//we logged off, so go back to logon page,
+						//stop checking messages
+						//and clear the chat panel
+						showPanel('logonPanel');
+						HideMenu();
+					}
+					else {
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
+	</script>
 	<link href="style.css" rel="stylesheet">
 </head >
 <body>
@@ -22,7 +103,7 @@
 		<div class="logonBox">
 			<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
 				<div class="left"><h2>Logon</h2></div>
-				<div><a href="#" onclick="showPanel('newAccountPanel')" class="tinyLink">...or request an account</a></div>
+				<div><a href='requestAccount.html' class="tinyLink">...or request an account</a></div>
 				<br><hr />
 				<div>
 					ID: <input type="text" id="logonId" />
@@ -38,127 +119,5 @@
 
 		</div>	
 	</div>
-
-	<div id="avatarChoosingPanel">
-		<div class="avatarBox">
-			<h1>Choose Your Avatar</h1>
-			<table class="alienOptions">
-				<!-- Aliens -->
-				<tr>
-					<td>
-						<div>
-							<label id="alien1" for="a1">
-								<div><img src="" width="500" alt="Alien 1"></div>
-							</label>
-							<input type="radio" name="alienChosen" id="a1" value="" class="">
-						</div>
-					</td>
-					<td>
-						<div>
-							<label id="alien2" for="a2">
-								<div><img src="" width="500" alt="Alien 2"></div>
-							</label>
-							<input type="radio" name="alienChosen" id="a2" value="" class="">
-						</div>
-					</td>
-					<td>
-						<div>
-							<label id="alien3" for="a3">
-								<div><img src="" width="500" alt="Alien 3"></div>
-							</label>
-							<input type="radio" name="alienChosen" id="a3" value="" class="">
-						</div>
-					</td>
-				</tr>
-				<!-- Name -->
-				<tr>
-					<td>
-						<div>
-							<label for="alienName">
-								Give your alien a name:
-							</label>
-							<input type="text" id="alienName">
-						</div>
-					</td>
-				</tr>
-
-				<!-- Submit -->
-				<tr>
-					<td colspan="3">
-						<!--						<input type="submit" id="submit"-->
-						<!--							   value="Click to blast off!">-->
-						<br><button>Click to blast off!</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-
-	<div id="requestsPanel" class="contentPanel">
-		<div class="left">Account requests</div>
-		<hr />
-		<div class="accountsBox" id="requestsBox">
-		</div>
-	</div>	
-
-	<div id="newAccountPanel" class="contentPanel newAccountPanel">
-		<div class="newAccountBox">
-			<form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
-				<div class="left">Request Account</div>
-				<div><a href="#" onclick="showPanel('logonPanel')" class="tinyLink">...or log on</a></div>
-				<hr />
-				<div>
-					ID: <input type="text" id="newLogonId" />
-				</div>
-				<div>
-					Pwd: <input type="password" id="newLogonPassword" />
-				</div>
-				<div>
-					First: <input type="text" id="newLogonFName" />
-				</div>
-				<div>
-					Last: <input type="text" id="newLogonLName" />
-				</div>
-				<div>
-					Email: <input type="text" id="newLogonEmail" />
-				</div>
-				<hr />
-				<div>
-					<button type="submit">Go!</button>
-				</div>
-			</form>
-
-		</div>
-	</div>
-
-		<div id="editAccountPanel" class="contentPanel newAccountPanel">
-			<div class="newAccountBox">
-				<form onsubmit="EditAccount(); return false;">
-					<div class="left">Edit Account</div>
-					<div><a href="#" onclick="DeactivateAccount()" class="tinyLink">...or deactivate</a></div>
-					<hr />
-					<div>
-						ID: <input type="text" id="editLogonId" />
-					</div>
-					<div>
-						Pwd: <input type="password" id="editLogonPassword" />
-					</div>
-					<div>
-						First: <input type="text" id="editLogonFName" />
-					</div>
-					<div>
-						Last: <input type="text" id="editLogonLName" />
-					</div>
-					<div>
-						Email: <input type="text" id="editLogonEmail" />
-					</div>
-					<hr />
-					<div>
-						<button type="submit">Save</button>
-					</div>
-				</form>
-
-			</div>
-		</div>
 </body>
 </html >

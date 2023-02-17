@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Account Request</title>
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+        //resets the new account inputs
+        function clearNewAccount() {
+            $('#newLogonId').val("");
+            $('#newLogonPassword').val("");
+            $('#newLogonFName').val("");
+            $('#newLogonLName').val("");
+            $('#newLogonEmail').val("");
+        }
+        
+        //passes account info to the server, to create an account request
+        function CreateAccount(id, pass, fname, lname, email) {
+            var webMethod = "ProjectServices.asmx/RequestAccount";
+            var parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" + encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    window.open('index.html', '_self')
+                    clearNewAccount();
+                    alert("Account request pending approval...");
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
+    </script>
+    <link href="style.css" rel="stylesheet">
+</head >
+<body>
+    <div id="newAccountPanel" class="contentPanel newAccountPanel">
+        <div class="newAccountBox">
+            <form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
+                <div class="left"><h1>Request Account</h1></div>
+                <div><a href="index.html" class="tinyLink">...or log on</a></div>
+                <br><hr /><br>
+                <div class="left">
+                    <div>
+                        ID: <input type="text" id="newLogonId" />
+                    </div>
+                    <div>
+                        Pwd: <input type="password" id="newLogonPassword" />
+                    </div>
+                    <div>
+                        First: <input type="text" id="newLogonFName" />
+                    </div>
+                    <div>
+                        Last: <input type="text" id="newLogonLName" />
+                    </div>
+                    <div>
+                        Email: <input type="text" id="newLogonEmail" />
+                    </div>
+                </div>
+                <br><hr/><br>
+                <div>
+                    <button type="submit">Go!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html >

@@ -11,11 +11,27 @@ html {
 }
 
 nav {
-    background-color: pink;
+    background-color: rgb(99, 57, 142);
     width: auto;
     height: 30px;
     color: black;
+    
 }
+
+#side1 {
+    padding-left: 20px;
+    float: left;
+    margin: 5px;
+    color: greenyellow;
+}
+
+#side2 {
+    padding-right: 20px;
+    float: right;
+    margin: 5px;
+    color: greenyellow;
+}
+
 
 footer {
     position: sticky;
@@ -23,21 +39,21 @@ footer {
 
 body {
     background-image: url("galaxy_background.gif");
-    height: 100vh;
+    height: 110vh;
     padding:0;
     margin:0;
    }
 
    ul li a {
     display: block;
-    background-color: #FFC627;
+    background-color: rgb(99, 57, 142);
     float: center;
-    width: 100px;
+    width: 150px;
     text-align: center;
     padding: 10px 10px;
     margin: 20px;
     text-decoration: none;
-    color: #8C1D40;
+    color: greenyellow;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -45,11 +61,17 @@ body {
   }
 
   ul {
-    margin: 0;
+    margin: -30px;
     padding-left: 650px;
-    padding-top: 100px;
+    padding-top: 0px;
     padding-bottom: 200px;
     padding-right: 650px;
     list-style-type: none;
     position: center;
+  }
+
+  #spaceship {
+    margin: -100px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }

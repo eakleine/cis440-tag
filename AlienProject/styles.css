@@ -13,7 +13,7 @@ html {
 nav {
     background-color: pink;
     width: auto;
-    height: 50px;
+    height: 30px;
     color: black;
 }
 
@@ -35,7 +35,7 @@ body {
     width: 100px;
     text-align: center;
     padding: 10px 10px;
-    margin: 5px;
+    margin: 20px;
     text-decoration: none;
     color: #8C1D40;
     border-top-left-radius: 15px;
@@ -53,19 +53,3 @@ body {
     list-style-type: none;
     position: center;
   }
-
-  button {
-  display: block;
-  background-color: #FFC627;
-  float: right;
-  width: 100px;
-  text-align: center;
-  padding: 5px 5px;
-  margin: 5px;
-  text-decoration: none;
-  color: #8C1D40;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}

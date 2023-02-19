@@ -27,11 +27,6 @@ h1 {
 	text-align: center;
 }
 
-.alienOptions {
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .menu {
 	flex: 1;
 	text-align: right;
@@ -98,12 +93,15 @@ nav {
 	height: 50px;
 	color: black;
 	margin: 20px;
+	border-radius:10px;
 }
 
 #homePage{
 	font-family: 'Dosis', sans-serif;
 	color: black;
 }
+
+
 
 /* footer {
 	position: sticky;
@@ -200,6 +198,9 @@ nav {
 /*	color: blue;*/
 /*}*/
 
+
+
+/* Avatar Creator Page */
 .alienOptions {
 	text-align: center;
 	margin: auto;
@@ -209,7 +210,9 @@ td {
 	min-width: 250px;
     padding: 10px;
 	padding-top:30px;
+	padding-bottom:50px;
 }
+
 #alienName{
 	width: 60%;
 }
@@ -221,4 +224,17 @@ td {
     color: black;
     width:35%;
     border-radius:20px;
+}
+
+.avatarPics {
+	opacity: 0.5;
+}
+
+.avatarPics:hover {
+	opacity: 1.0;
+}
+
+.alienOptions {
+	margin-left: auto;
+	margin-right: auto;
 }

@@ -6,7 +6,9 @@
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-
+        var accountsArray;
+        var noRepeatedAccount;
+       
         //resets the new account inputs
         function clearNewAccount() {
             $('#newLogonId').val("");
@@ -18,25 +20,66 @@
         
         //passes account info to the server, to create an account request
         function CreateAccount(id, pass, fname, lname, email) {
-            var webMethod = "ProjectServices.asmx/RequestAccount";
-            var parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" + encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
 
+            var webMethod = "ProjectServices.asmx/StoreAccounts";
             $.ajax({
                 type: "POST",
                 url: webMethod,
-                data: parameters,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    window.open('index.html', '_self')
-                    clearNewAccount();
-                    alert("Account request pending approval...");
+                    if (msg.d.length > 0) {
+                        //let's put our accounts that we get from the
+                        //server into our accountsArray variable
+                        //so we can use them in other functions as well
+                        accountsArray = msg.d;
+                        noRepeatedAccount = false;
+
+                        for (var i = 0; i < accountsArray.length; i++){
+                            // console.log(accountsArray[i]);
+                            if (accountsArray[i].userId == id){
+                                noRepeatedAccount = false;
+                                break;
+                            } else {
+                                noRepeatedAccount = true;
+                            }
+                        }
+                    } else {
+                        alert("loading accounts failed");
+                    }
+                    console.log(noRepeatedAccount);
+                    
+                    if (noRepeatedAccount){
+                        webMethod = "ProjectServices.asmx/RequestAccount";
+                        parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
+                            encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
+
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            data: parameters,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                window.open('index.html', '_self')
+                                clearNewAccount();
+                                alert("Account created!");
+                            },
+                            error: function (e) {
+                                alert("boo...");
+                            }
+                        })
+                    } else{
+                        alert('Account ID exists! Choose a new one.');
+                        clearNewAccount();
+                    };
                 },
                 error: function (e) {
                     alert("boo...");
                 }
-            });
-        }
+            })
+        };
+        
     </script>
     <link href="style.css" rel="stylesheet">
 </head >
@@ -49,7 +92,7 @@
                 <br><hr /><br>
                 <div class="left">
                     <div>
-                        ID: <input type="text" id="newLogonId" />
+                        UserID: <input type="text" id="newLogonId" />
                     </div>
                     <div>
                         Pwd: <input type="password" id="newLogonPassword" />

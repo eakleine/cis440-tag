@@ -4,32 +4,133 @@
 <head>
     <meta charset="utf-8">
     <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        //logs the user off both at the client and at the server
+        function LogOff() {
+
+            var webMethod = "ProjectServices.asmx/LogOff";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        //we logged off, so go back to logon page,
+                        //stop checking messages
+                        //and clear the chat panel
+                        window.open('index.html', '_self')
+                    }
+                    else {
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
+    </script>
     <link href="style.css" rel="stylesheet">
     <style>
-        h2, div {
+        h2, ul {
             text-align: center;
+        }
+        
+        nav {
+            background-color: rgb(99, 57, 142);
+            width: auto;
+            height: 30px;
+            color: black;
+
+        }
+
+        .side1 {
+            padding-left: 20px;
+            float: left;
+            margin: 5px;
+            color: greenyellow;
+        }
+
+        #side2 {
+            padding-right: 20px;
+            float: right;
+            margin: 5px;
+            color: greenyellow;
+        }
+
+        h1 {
+            font-size: 35px;
+            padding-top: 70px;
+        }
+
+        footer {
+            position: sticky;
+        }
+
+        body {
+            background-image: url("galaxy_background.gif");
+            height: 110vh;
+            padding:0;
+            margin:0;
+        }
+
+        ul li a {
+            display: block;
+            background-color: rgb(99, 57, 142);
+            /*float: center;*/
+            width: 150px;
+            text-align: center;
+            padding: 10px 10px;
+            margin: 20px;
+            text-decoration: none;
+            color: greenyellow;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        ul {
+            margin: -30px;
+            padding-left: 650px;
+            padding-top: 0px;
+            padding-right: 650px;
+            list-style-type: none;
+            position: center;
+        }
+
+        #spaceship {
+            margin: -100px;
+            padding-top: 0px;
+            padding-bottom: 0px;
         }
 
     </style>
 </head>
 
 <body>
-<nav>
-    <a href = "avatar_creator.html">Profile</a>
-</nav>
 
-<header>
-</header>
+    <header>
+        <nav>
+            <a class="side1" href="help.html">Help</a>
+<!--            <a class="side1" onclick="LogOff()">Logout</a>-->
+            <a class="side1" href="#" onclick="LogOff()">Log off</a>
+            <a id="side2">Welcome, User123</a>
+        </nav>
+    </header>
 
-<main>
-
-    <h1>Where Will You Go Today?</h1>
-    <h2>Experience a different realm of adventure with each new gameplay</h2>
-    <div>
-        <button>Cutomize Your Character</button>
-        <button>Start</button>
-    </div>
-</main>
+    <main>
+    
+        <h1>Where Will You Go Today?</h1>
+        <h2>Experience a different realm of adventure with each new gameplay</h2>
+        <img id="spaceship" src="spaceship2.gif" />
+    
+        <ul>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href = "avatar_creator.html">Create your alien avatar!</a></li>
+        </ul>
+    </main>
 
 </body>
 

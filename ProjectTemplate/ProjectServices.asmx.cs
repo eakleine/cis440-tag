@@ -74,8 +74,7 @@ namespace ProjectTemplate
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//here's our query.  A basic select with nothing fancy.  Note the parameters that begin with @
 			//NOTICE: we added admin to what we pull, so that we can store it along with the id in the session
-			// string sqlSelect = "SELECT id, admin FROM accounts WHERE userid=@idValue and pass=@passValue";
-			string sqlSelect = "SELECT id FROM user_database WHERE userid=@idValue and pass=@passValue";
+			string sqlSelect = "SELECT id, admin FROM user_database WHERE userid=@idValue and pass=@passValue";
 
 			//set up our connection object to be ready to use our connection string
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
@@ -103,7 +102,7 @@ namespace ProjectTemplate
 				//so we can check those values later on other method calls to see if they 
 				//are 1) logged in at all, and 2) and admin or not
 				Session["id"] = sqlDt.Rows[0]["id"];
-				// Session["admin"] = sqlDt.Rows[0]["admin"];
+				Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
@@ -120,6 +119,40 @@ namespace ProjectTemplate
 			//in the session!
 			Session.Abandon();
 			return true;
+		}
+		
+		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
+		[WebMethod(EnableSession = true)]
+		public Account[] StoreAccounts()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			string sqlSelect = "select id, userid, pass, firstname, lastname, email from user_database";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			List<Account> accounts = new List<Account>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				accounts.Add(new Account
+				{
+					id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
+					userId = sqlDt.Rows[i]["userid"].ToString(),
+					password = sqlDt.Rows[i]["pass"].ToString(),
+					firstName = sqlDt.Rows[i]["firstname"].ToString(),
+					lastName = sqlDt.Rows[i]["lastname"].ToString(),
+					email = sqlDt.Rows[i]["email"].ToString()
+				});
+			}
+			//convert the list of accounts to an array and return!
+			return accounts.ToArray();
 		}
 
 		//EXAMPLE OF AN INSERT QUERY WITH PARAMS PASSED IN.  BONUS GETTING THE INSERTED ID FROM THE DB!
@@ -188,7 +221,7 @@ namespace ProjectTemplate
 				sqlDa.Fill(sqlDt);
 
 				//loop through each row in the dataset, creating instances
-				//of our container class Account.  Fill each acciount with
+				//of our container class Account.  Fill each account with
 				//data from the rows, then dump them in a list.
 				List<Account> accounts = new List<Account>();
 				for (int i = 0; i < sqlDt.Rows.Count; i++)

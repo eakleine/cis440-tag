@@ -46,14 +46,14 @@
         }
 
         .side1 {
-            padding-left: 20px;
             float: left;
-            margin: 5px;
+            margin: 20px;
+            padding: 20px 20px;
+            margin-left: -15px;
             color: greenyellow;
         }
 
-        #side2 {
-            padding-right: 20px;
+        .side2 {
             float: right;
             margin: 5px;
             color: greenyellow;
@@ -61,7 +61,7 @@
 
         h1 {
             font-size: 35px;
-            padding-top: 70px;
+            padding-top: 40px;
         }
 
         footer {
@@ -107,6 +107,23 @@
             padding-left: 560px;
         }
 
+        #nav_bar {
+            display:inline-block;
+            background-color: rgb(148, 115, 182);
+            /*float: center;*/
+            width: 150px;
+            text-align: center;
+            padding: 10px 5px;
+            margin-top: -15px;
+            text-decoration: none;
+            color: greenyellow;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+
+        }
+
     </style>
 </head>
 
@@ -114,10 +131,10 @@
 
     <header>
         <nav>
-            <a class="side1" href="help.html">Help</a>
+            <a id="nav_bar"class="side1" href="help.html">Help</a>
 <!--            <a class="side1" onclick="LogOff()">Logout</a>-->
-            <a class="side1" href="#" onclick="LogOff()">Log off</a>
-            <a id="side2">Welcome, User123</a>
+            <a id="nav_bar"class="side1" href="#" onclick="LogOff()">Log off</a>
+            <a id="nav_bar"class="side2">Welcome, User123</a>
         </nav>
     </header>
 

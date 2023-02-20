@@ -1,21 +1,20 @@
 html {
     font-family: 'Dosis', sans-serif;
     background-color: black;
-    color: greenyellow;
+    color: black;
     text-align: center;
+}
+
+nav {
+    background-color: purple;
+    width: auto;
+    height: 50px;
+    color: black;
 }
 
 .alienOptions {
     margin-left: auto;
     margin-right: auto;
-}
-
-nav {
-    background-color: rgb(99, 57, 142);
-    width: auto;
-    height: 30px;
-    color: black;
-    
 }
 
 #side1 {
@@ -37,20 +36,29 @@ h1 {
     padding-top: 70px;
 }
 
-footer {
-    position: sticky;
+main {
+    border: 15px solid purple;
+    width: 850px;
+    padding: auto;
+    margin: 50px auto;
+    align-items: center;
+}
+.gradientBG {
+    background: linear-gradient(purple, lightblue, honeydew);
 }
 
 body {
     background-image: url("galaxy_background.gif");
-    height: 110vh;
+    height: 150vh;
     padding:0;
     margin:0;
+    background-repeat: repeat;
+    /* background-attachment: fixed; */
    }
 
    ul li a {
     display: block;
-    background-color: rgb(99, 57, 142);
+    background-color: purple;
     float: center;
     width: 150px;
     text-align: center;
@@ -78,3 +86,8 @@ body {
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
+  footer {
+    position: sticky;
+}
+

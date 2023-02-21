@@ -6,6 +6,7 @@ using System.Web.Services;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Org.BouncyCastle.Bcpg;
 
 namespace ProjectTemplate
 {
@@ -106,6 +107,8 @@ namespace ProjectTemplate
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
+				int userid = int.Parse(Session["id"].ToString());
+				UpdateLoginStatus(userid, "logged in");
 			}
 			//return the result!
 			return success;
@@ -118,7 +121,60 @@ namespace ProjectTemplate
 			//again later they have to log back on in order for their ID to be back
 			//in the session!
 			Session.Abandon();
+			int userid = int.Parse(Session["id"].ToString());
+			UpdateLoginStatus(userid,"logged off");
 			return true;
+		}
+		
+		public void UpdateLoginStatus(int id, string log)
+		{
+			AllowChange();
+
+			string sqlSelect = "insert into login_status (id, time, log) values(@idValue, now(), @logValue);";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", id);
+			sqlCommand.Parameters.AddWithValue("@logValue", log);
+
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
+		}
+
+		public void AllowChange()
+		{
+			string sqlSet = "set foreign_key_checks = 0;";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSet, sqlConnection);
+			
+			sqlConnection.Open();
+			
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Foreign key query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
 		}
 		
 		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES

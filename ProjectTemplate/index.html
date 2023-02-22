@@ -61,37 +61,38 @@
 			});
 		}
 	</script>
-	<link href="style.css" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
 </head >
 <body>
-	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
-	<div>
-		<span><h1>Welcome to Alien Wonderland</h1></span>
-<!--		<div id="menu" class="menu">-->
-<!--			<a href="#" id="adminLink" onclick="adminClick()"></a>-->
-<!--			<a href="#" onclick="LogOff()">log off</a>-->
-<!--		</div>-->
-	</div>
+	<header>
+		<nav>
+			<a id="leftAlign">Welcome</a>
+			<a id="rightAlign" href="help.html">Help</a>
+		</nav>
+	</header>
 
-	<div id="logonPanel" class="logonPanel">
-		<div class="logonBox">
-			<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
-				<div class="left"><h2>Logon</h2></div>
-				<div><a href='requestAccount.html' class="tinyLink">...or request an account</a></div>
-				<br><hr />
-				<div>
-					ID: <input type="text" id="logonId" />
-				</div>
-				<div>
-					Pwd: <input type="password" id="logonPassword" />
-				</div>
-				<hr /><br>
-				<div>
-					<button class="goButton" type="submit">Go!</button>
-				</div>
-			</form>
+	<main class="gradientBG">
+		<h1>Space must be explored..</h1>
+		<h2>Login below to reach for the stars!</h2>
 
-		</div>	
-	</div>
+		<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
+			<div><a href='requestAccount.html' class="tinyLink">...or request an account</a></div>
+			<br>
+			<section>
+				<label>Username</label><br />
+				<input type="text" id="logonId" name="account" /><br /><br />
+			</section>
+			<section>
+				<label>Password</label><br />
+				<input type="password" id="logonPassword" name="password" /><br /><br />
+			</section>
+			<br>
+				  <div>
+					  <input type="reset" value="Clear">
+					  <button class="goButton" type="submit">Go!</button>
+				  </div>
+		</form>
+
+	</main>
 </body>
 </html >

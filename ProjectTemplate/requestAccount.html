@@ -1,118 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>Account Request</title>
-    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        var accountsArray;
-        var noRepeatedAccount;
-       
-        //resets the new account inputs
-        function clearNewAccount() {
-            $('#newLogonId').val("");
-            $('#newLogonPassword').val("");
-            $('#newLogonFName').val("");
-            $('#newLogonLName').val("");
-            $('#newLogonEmail').val("");
-        }
-        
-        //passes account info to the server, to create an account request
-        function CreateAccount(id, pass, fname, lname, email) {
+	<meta charset="utf-8" />
+	<title>Create and Account</title>
+	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--	<script type="text/javascript" src="frontendProcessing.js"></script>-->
+	
+	<script>
 
-            var webMethod = "ProjectServices.asmx/StoreAccounts";
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    if (msg.d.length > 0) {
-                        //let's put our accounts that we get from the
-                        //server into our accountsArray variable
-                        //so we can use them in other functions as well
-                        accountsArray = msg.d;
-                        noRepeatedAccount = false;
+		//resets the logon inputs
+		function clearLogon() {
+			$('#logonId').val("");
+			$('#logonPassword').val("");
+		}
+		function TestButtonHandler() {
+			var webMethod = "ProjectServices.asmx/TestConnection";
+			var parameters = "{}";
 
-                        for (var i = 0; i < accountsArray.length; i++){
-                            // console.log(accountsArray[i]);
-                            if (accountsArray[i].userId == id){
-                                noRepeatedAccount = false;
-                                break;
-                            } else {
-                                noRepeatedAccount = true;
-                            }
-                        }
-                    } else {
-                        alert("loading accounts failed");
-                    }
-                    console.log(noRepeatedAccount);
-                    
-                    if (noRepeatedAccount){
-                        webMethod = "ProjectServices.asmx/RequestAccount";
-                        parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
-                            encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					var responseFromServer = msg.d;
+					alert(responseFromServer);
+				},
+				error: function (e) {
+					alert("this code will only execute if javascript is unable to access the webservice");
+				}
+			});
+		}
+		function LogOn(userId, pass) {
+			var webMethod = "ProjectServices.asmx/LogOn";
+			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
 
-                        $.ajax({
-                            type: "POST",
-                            url: webMethod,
-                            data: parameters,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (msg) {
-                                window.open('index.html', '_self')
-                                clearNewAccount();
-                                alert("Account created!");
-                            },
-                            error: function (e) {
-                                alert("boo...");
-                            }
-                        })
-                    } else{
-                        alert('Account ID exists! Choose a new one.');
-                        clearNewAccount();
-                    };
-                },
-                error: function (e) {
-                    alert("boo...");
-                }
-            })
-        };
-        
-    </script>
-    <link href="style.css" rel="stylesheet">
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						//server replied true, so direct the user to the dashboard
+						window.open('dashboard.html', '_self')
+						// TODO: remove the munu function and add a log off button instead
+						// ShowMenu();
+					}
+					else {
+						alert("logon failed");
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
+	</script>
+
+	<link href="styles.css" rel="stylesheet">
+
 </head >
+
 <body>
-    <div id="newAccountPanel" class="contentPanel newAccountPanel">
-        <div class="newAccountBox">
-            <form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
-                <div class="left"><h1>Request Account</h1></div>
-                <div><a href="index.html" class="tinyLink">...or log on</a></div>
-                <br><hr /><br>
-                <div class="left">
-                    <div>
-                        UserID: <input type="text" id="newLogonId" />
-                    </div>
-                    <div>
-                        Pwd: <input type="password" id="newLogonPassword" />
-                    </div>
-                    <div>
-                        First: <input type="text" id="newLogonFName" />
-                    </div>
-                    <div>
-                        Last: <input type="text" id="newLogonLName" />
-                    </div>
-                    <div>
-                        Email: <input type="text" id="newLogonEmail" />
-                    </div>
-                </div>
-                <br><hr/><br>
-                <div>
-                    <button type="submit">Go!</button>
-                </div>
-            </form>
-        </div>
-    </div>
+	<header>
+		<nav>
+			<a id="leftAlign">Welcome</a>
+			<a id="rightAlign" href="help.html">Help</a>
+		</nav>
+	</header>
+
+	<main class="gradientBG">
+		<h1>It's time to build your account login!</h1>
+		<h2>Fill out the form below to start you journey</h2>
+
+        <form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
+			<section>
+				<label>Username</label><br />
+				<input type="text" id="newLogonId" name="username" required /><br /><br />
+			</section>
+
+			<section>
+				<label>Password</label><br />
+				<input type="password" id="newLogonPassword" name="password" required /><br /><br />
+			</section>
+
+            <section>
+				<label>First Name</label><br />
+				<input type="text" id="newLogonFName" name="fName" required /><br /><br />
+			</section>
+
+            <section>
+				<label>Last Name</label><br />
+				<input type="text" id="newLogonLName" name="lName" required /><br /><br />
+			</section>
+
+            <section>
+				<label>Email</label><br />
+				<input type="text" id="newLogonEmail" name="email" required /><br /><br />
+			</section>
+
+			<br>
+				  <div>
+					  <input type="reset" value="Clear">
+					  <button class="goButton" type="submit">Go!</button>
+				  </div>
+
+		</form>
+
+	</main>
 </body>
 </html >

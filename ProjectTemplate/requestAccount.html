@@ -7,61 +7,83 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--	<script type="text/javascript" src="frontendProcessing.js"></script>-->
 	
-	<script>
 
-		//resets the logon inputs
-		function clearLogon() {
-			$('#logonId').val("");
-			$('#logonPassword').val("");
-		}
-		function TestButtonHandler() {
-			var webMethod = "ProjectServices.asmx/TestConnection";
-			var parameters = "{}";
+<script>
+	var accountsArray;
+	var noRepeatedAccount;
+   
+	//resets the new account inputs
+	function clearNewAccount() {
+		$('#newLogonId').val("");
+		$('#newLogonPassword').val("");
+		$('#newLogonFName').val("");
+		$('#newLogonLName').val("");
+		$('#newLogonEmail').val("");
+	}
+	
+	//passes account info to the server, to create an account request
+	function CreateAccount(id, pass, fname, lname, email) {
 
-			//jQuery ajax method
-			$.ajax({
-				type: "POST",
-				url: webMethod,
-				data: parameters,
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (msg) {
-					var responseFromServer = msg.d;
-					alert(responseFromServer);
-				},
-				error: function (e) {
-					alert("this code will only execute if javascript is unable to access the webservice");
-				}
-			});
-		}
-		function LogOn(userId, pass) {
-			var webMethod = "ProjectServices.asmx/LogOn";
-			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+		var webMethod = "ProjectServices.asmx/StoreAccounts";
+		$.ajax({
+			type: "POST",
+			url: webMethod,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (msg) {
+				if (msg.d.length > 0) {
+					//let's put our accounts that we get from the
+					//server into our accountsArray variable
+					//so we can use them in other functions as well
+					accountsArray = msg.d;
+					noRepeatedAccount = false;
 
-			//jQuery ajax method
-			$.ajax({
-				type: "POST",
-				url: webMethod,
-				data: parameters,
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (msg) {
-					if (msg.d) {
-						//server replied true, so direct the user to the dashboard
-						window.open('dashboard.html', '_self')
-						// TODO: remove the munu function and add a log off button instead
-						// ShowMenu();
+					for (var i = 0; i < accountsArray.length; i++){
+						// console.log(accountsArray[i]);
+						if (accountsArray[i].userId == id){
+							noRepeatedAccount = false;
+							break;
+						} else {
+							noRepeatedAccount = true;
+						}
 					}
-					else {
-						alert("logon failed");
-					}
-				},
-				error: function (e) {
-					alert("boo...");
+				} else {
+					alert("loading accounts failed");
 				}
-			});
-		}
-	</script>
+				console.log(noRepeatedAccount);
+				
+				if (noRepeatedAccount){
+					webMethod = "ProjectServices.asmx/RequestAccount";
+					parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
+						encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
+
+					$.ajax({
+						type: "POST",
+						url: webMethod,
+						data: parameters,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (msg) {
+							window.open('index.html', '_self')
+							clearNewAccount();
+							alert("Account created!");
+						},
+						error: function (e) {
+							alert("boo...");
+						}
+					})
+				} else{
+					alert('Account ID exists! Choose a new one.');
+					clearNewAccount();
+				};
+			},
+			error: function (e) {
+				alert("boo...");
+			}
+		})
+	};
+	
+</script>
 
 	<link href="styles.css" rel="stylesheet">
 

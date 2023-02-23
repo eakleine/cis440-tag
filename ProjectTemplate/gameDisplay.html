@@ -7,6 +7,9 @@
     <script src="game.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
+<script>
+    console.log(document.getElementById("A").value);
+</script>
 
 <body>
 
@@ -32,12 +35,12 @@
             <!-- <form method="GET" action="http://localhost:8080"> -->
                     <tr>
                         <td>
-                            <input type="radio" class="choice" id="A" value="A">
-                            <label id="A">Choice One</label>
+                            <input type="radio" class="choice" id="A" name="choice" value="A">
+                            <label for="A" id="labelA">Choice One</label>
                         </td>
                         <td>
-                            <input type="radio" class="choice" id="B" value="B">
-                            <label id="B">Choice Two</label>
+                            <input type="radio" class="choice" id="B" name="choice" value="B">
+                            <label for="B" id="labelB">Choice Two</label>
                         </td>
                     </tr>
                     <tr>

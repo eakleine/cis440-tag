@@ -10,8 +10,10 @@ let choices = '';
 
 function nextPrompt() {
 
+    thing = document.getElementsByTagName('label');
+    console.log(thing.values);
     // get value of user's last choice
-    // let lastChoice = document.getElementsByClassName('choice').value;
+    // let lastChoice = document.getElementsByClassName('choice');
     // debugger;
     // console.log(lastChoice);
 

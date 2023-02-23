@@ -29,7 +29,82 @@
         <!-- Space Gawn -->
         <img id="rocketShip" class="center" src="alienBoi.gif" /> 
 
-        <form method="GET" action="http://localhost:8080">
+        <form>
+            <table class="alienOptions">
+                <th>
+                    What's your name?
+                </th>
+                <tr>
+                    <td colspan="3">
+                        <div id="nameInput">
+                            <input type="text" id="alienName">
+                        </div>
+                    </td>
+                </tr>
+                <th>Choose your Avatar</th>
+                <!-- Aliens -->
+                <tr>
+                    <td>
+                        <div>
+                            <label id="alien1" for="a1">
+                                <div><img src="triangle.png" width="200" class="avatarPics" alt="Alien 1"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a1" value="" class="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label id="alien2" for="a2">
+                                <div><img src="circle.png" width="200" class="avatarPics" alt="Alien 2"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a2" value="" class="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label id="alien3" for="a3">
+                                <div><img src="square.png" width="200" class="avatarPics" alt="Alien 3"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a3" value="" class="">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Planet -->
+                <th>Choose your Home Planet</th>
+                <tr>
+                    <td>
+                        <div>
+                            <label id="planet1" for="p1">
+                                <div><img src="triangle.png" width="200" class="avatarPics" alt="Planet 1"></div>
+                            </label>
+                            <input type="radio" name="planetChosen" id="a1" value="" class="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label id="planet2" for="p2">
+                                <div><img src="circle.png" width="200" class="avatarPics" alt="Planet 2"></div>
+                            </label>
+                            <input type="radio" name="planetChosen" id="p2" value="" class="">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label id="planet3" for="p3">
+                                <div><img src="square.png" width="200" class="avatarPics" alt="Planet 3"></div>
+                            </label>
+                            <input type="radio" name="planetChosen" id="p3" value="" class="">
+                        </div>
+                    </td>
+                </tr>
+                <!-- Submit -->
+                <tr>
+                    <td colspan="3">
+                        <input type="submit" id="submit" class="avatarPageButtons" value="Save Changes">
+                   </td>
+                </tr>
+            </table>
+    
         </form>
 
         <!-- Char and Start -->

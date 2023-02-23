@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Gameplay</title>
-
+    <script src="game.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
 
@@ -25,27 +25,27 @@
 
         <h1>New Game Time</h1>
         <!-- Prompt -->
-        <span>
+        <span id="question">
             Prompt 1
         </span>
         <table>
-            <form method="GET" action="http://localhost:8080">
+            <!-- <form method="GET" action="http://localhost:8080"> -->
                     <tr>
                         <td>
-                            <input type="radio">
-                            <label>Choice One</label>
+                            <input type="radio" name="choice" id="A" value="A">
+                            <label id="choiceALabel">Choice One</label>
                         </td>
                         <td>
-                            <input type="radio">
-                            <label>Choice Two</label>
+                            <input type="radio" name="choice" id="B" value="B">
+                            <label id="choiceBLabel">Choice Two</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="submit" value="Next!">
+                            <button onClick="nextPrompt()">Next!</button>
                         </td>
                     </tr>
-            </form>
+            <!-- </form> -->
         </table>
     </main>
 

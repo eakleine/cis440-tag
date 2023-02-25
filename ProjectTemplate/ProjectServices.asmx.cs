@@ -177,6 +177,34 @@ namespace ProjectTemplate
 			sqlConnection.Close(); 
 		}
 		
+		
+		[WebMethod(EnableSession = true)]
+		public int LoadCurrentAccount()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select id from login_status ORDER BY time DESC LIMIT 1;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			int id = 0;
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				id = Convert.ToInt32(sqlDt.Rows[i]["id"]);
+				Console.WriteLine(id);
+			}
+			//return id
+			return id;
+		}
+		
 		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
 		[WebMethod(EnableSession = true)]
 		public Account[] StoreAccounts()
@@ -218,8 +246,8 @@ namespace ProjectTemplate
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email) " +
-				"values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue); SELECT LAST_INSERT_ID();";
+			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email, admin, charID) " +
+				"values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue, 0, 1); SELECT LAST_INSERT_ID();";
 			// ToDo: creating a request table and insert into request table instead of user_database
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());

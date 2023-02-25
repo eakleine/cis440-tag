@@ -4,11 +4,113 @@
 <head>
     <meta charset="utf-8">
     <title>My Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var userID = 0;
+        var userName = '';
+        var userPass = '';
+        var userFname = '';
+        var userLname = '';
+        var userEmail = '';
+        var accountsArray;
 
+        function CurrentAccountDisplay() {
+
+            var webMethod = "ProjectServices.asmx/LoadCurrentAccount";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        userID = msg.d;
+                        
+                        webMethod = "ProjectServices.asmx/StoreAccounts";
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg.d.length > 0) {
+
+                                    accountsArray = msg.d;
+
+                                    for (var i = 0; i < accountsArray.length; i++){
+                                        // console.log(accountsArray[i]);
+                                        if (accountsArray[i].id == userID){
+                                            
+                                            userName = accountsArray[i].userId;
+                                            userPass = accountsArray[i].password;
+                                            userFname = accountsArray[i].firstName;
+                                            userLname = accountsArray[i].lastName;
+                                            userEmail = accountsArray[i].email;
+                                            
+                                            console.log(userName, userPass, userFname, userLname, userEmail);
+                                            console.log('Storing Current User data success!')
+                                            
+                                            console.log('Displaying Data...')
+                                            document.getElementById('userlogonId').innerHTML = userName;
+                                            document.getElementById('userPass').innerHTML = userPass;
+                                            document.getElementById('userFname').innerHTML = userFname;
+                                            document.getElementById('userLname').innerHTML = userLname;
+                                            document.getElementById('userEmail').innerHTML = userEmail;
+
+                                            document.getElementById('avatar').innerHTML = 'Figrin D’an and the Modal Nodes';
+                                            
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    console.log("loading accounts failed");
+                                }
+                            },
+                            error: function (e) {
+                                alert("boo...");
+                            }
+                        });
+                    }
+                    else {
+                        console.log('error');
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
+
+        function LogOff() {
+
+            var webMethod = "ProjectServices.asmx/LogOff";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        //we logged off, so go back to logon page,
+                        //stop checking messages
+                        //and clear the chat panel
+                        window.open('logout.html', '_self')
+                    }
+                    else {
+                        alert('logout failed')
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
+        
+    </script>
     <link href="styles.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="CurrentAccountDisplay()">
 
     <!-- Upper Nav -->
     <header>
@@ -16,8 +118,7 @@
             <!--<a id="leftAlign">Welcome, User123!</a>-->
             <a id="leftAlign" href="dashboard.html">Dashboard</a>
             <a id="rightAlign" href="help.html">Help</a>
-            <a id="rightAlign" href="logout.html">Logout</a>
-
+            <a id="rightAlign" onclick="LogOff()" href="#">Logout</a>
             
         </nav>
     </header>
@@ -27,14 +128,31 @@
 
         <h1>Another day in Space</h1>
         <h2>Display user info below</h2>
-    
-
-        <form method="GET" action="http://localhost:8080">
-        </form>
-
-
+         <section>
+             <label>Username: </label>
+             <span id="userlogonId" name="account"></span><br /><br />
+         </section>
+         <section>
+             <label>Password: </label>
+             <span id="userPass" name="password"></span><br /><br />
+         </section>
+         <section>
+             <label>First Name: </label>
+             <span id="userFname" name="fname"></span><br /><br />
+         </section>
+         <section>
+             <label>Last Name: </label>
+             <span id="userLname" name="lname"></span><br /><br />
+         </section>
+         <section>
+             <label>Email: </label>
+             <span id="userEmail" name="email"></span><br /><br />
+         </section>
+         <section>
+             <label>Avatar: </label>
+             <span id="avatar" name="avatar"></span><br /><br />
+         </section>
     </main>
-
 
 
 </body>

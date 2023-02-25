@@ -10,15 +10,22 @@ let choices = '';
 
 function nextPrompt() {
 
-    thing = document.getElementsByTagName('label');
-    console.log(thing.values);
-    // get value of user's last choice
-    // let lastChoice = document.getElementsByClassName('choice');
-    // debugger;
-    // console.log(lastChoice);
+    // thing = document.getElementsByTagName('label');
+    let getChoice = document.getElementById('A');
+    isChoiceAOn = getChoice.value;
+    console.log(isChoiceAOn);
+    if (isChoiceAOn === 'on'){
+        // concat string
+        choices += 'A';
+        console.log(choices);
+    } else {
+        // concat string
+        choices += 'B';
+        console.log(choices);
+    }
+    // let stuff = document.getElementsByName('radios').values;
+    // console.log(stuff)
 
-    // // concatenate latest choice to global variable choices
-    // choices += lastChoice;
 
     // local variables
     let prompt = '';
@@ -27,22 +34,32 @@ function nextPrompt() {
 
 
     // switch to handle each different possible combo of decisions
-    // switch (choices) {
-    //     case 'A':
+    switch (choices) {
+        case 'A':
             prompt = document.getElementById('question').innerHTML;
             // console.log(prompt);
             document.getElementById('question').innerHTML = 'Prompt 2';
 
             option1 = document.getElementById('choiceALabel').innerHTML;
             // console.log('option1');
-            document.getElementById('choiceALabel').innerHTML = 'New Choice 1';
+            document.getElementById('choiceALabel').innerHTML = 'A Choice 1';
 
             option1 = document.getElementById('choiceBLabel').innerHTML;
             // console.log('option2');
-            document.getElementById('choiceBLabel').innerHTML = 'New Choice 2';
-            // break;
-        // case 'B':
+            document.getElementById('choiceBLabel').innerHTML = 'A Choice 2';
+            break;
+        case 'B':
+            // console.log(prompt);
+            document.getElementById('question').innerHTML = 'Prompt 3';
 
+            option1 = document.getElementById('choiceALabel').innerHTML;
+            // console.log('option1');
+            document.getElementById('choiceALabel').innerHTML = 'B Choice 1';
+
+            option1 = document.getElementById('choiceBLabel').innerHTML;
+            // console.log('option2');
+            document.getElementById('choiceBLabel').innerHTML = 'B Choice 2';
+            break;
         // case 'AA':
 
         // case 'AB':
@@ -75,6 +92,6 @@ function nextPrompt() {
         // case 'BBB':
 
         //     endGame();
-    // }
+    }
 
 }

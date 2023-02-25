@@ -177,6 +177,34 @@ namespace ProjectTemplate
 			sqlConnection.Close(); 
 		}
 		
+		
+		[WebMethod(EnableSession = true)]
+		public int LoadCurrentAccount()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select id from login_status ORDER BY time DESC LIMIT 1;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			int id = 0;
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				id = Convert.ToInt32(sqlDt.Rows[i]["id"]);
+				Console.WriteLine(id);
+			}
+			//return id
+			return id;
+		}
+		
 		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
 		[WebMethod(EnableSession = true)]
 		public Account[] StoreAccounts()

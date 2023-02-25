@@ -5,8 +5,6 @@
 	<title>Home</title>
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--	<script type="text/javascript" src="frontendProcessing.js"></script>-->
-	
 	<script>
 
 		//resets the logon inputs
@@ -49,8 +47,6 @@
 					if (msg.d) {
 						//server replied true, so direct the user to the dashboard
 						window.open('dashboard.html', '_self')
-						// TODO: remove the munu function and add a log off button instead
-						// ShowMenu();
 					}
 					else {
 						alert("logon failed");
@@ -62,7 +58,6 @@
 			});
 		}
 	</script>
-
 	<link href="styles.css" rel="stylesheet">
 
 </head >
@@ -91,12 +86,11 @@
 				<input type="password" id="logonPassword" name="password" /><br /><br />
 			</section>
 			<br>
-				  <div>
-					  <input type="reset" value="Clear">
-					  <button class="goButton" type="submit">Go!</button>
-				  </div>
+			<div>
+				<input type="reset" value="Clear">
+				<button class="goButton" type="submit">Go!</button>
+			</div>	  
 		</form>
-
 	</main>
 </body>
 </html >

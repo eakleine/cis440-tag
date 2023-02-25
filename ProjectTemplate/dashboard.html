@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Profile</title>
+    <title>Dashboard</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         //logs the user off both at the client and at the server
@@ -20,9 +20,10 @@
                         //we logged off, so go back to logon page,
                         //stop checking messages
                         //and clear the chat panel
-                        window.open('index.html', '_self')
+                        window.open('logout.html', '_self')
                     }
                     else {
+                        alert('logout failed')
                     }
                 },
                 error: function (e) {
@@ -43,7 +44,7 @@
             <a id="leftAlign" href="profile.html">Profile</a>
 
             <a id="rightAlign" href="help.html">Help</a>
-            <a id="rightAlign" href="logout.html">Logout</a>
+            <a id="rightAlign" onclick="LogOff()" href="#">Logout</a>
 		</nav>
 	</header>
 
@@ -52,8 +53,7 @@
         <h1>Where Will You Go Today?</h1>
         <h2>Experience a different realm of adventure with each new gameplay</h2>
         <img id="rocketShip" class="center" src="rocketship.gif" />
-
-
+        
         <ul>
             <li><a href="profile.html">Profile</a></li>
             <li><a href="avatar_creator.html">Create your alien avatar!</a></li>

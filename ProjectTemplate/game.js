@@ -27,7 +27,7 @@ function nextPrompt() {
 
 
     // switch to handle each different possible combo of decisions
-    switch (choices) {
+    switch (currentChoice) {
         case 'A':
             prompt = document.getElementById('question').innerHTML;
             // console.log(prompt);

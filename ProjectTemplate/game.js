@@ -2,29 +2,22 @@
 let story = '';
 let choices = '';
 
-
+var currentChoice = ''
+var choiceHistory = ''
+		
 
 // function endGame(){
 //     // function to print global variable story
 // }
-
+    
 function nextPrompt() {
+    buttonA = document.getElementById('A');
+    buttonB = document.getElementById('B');
 
-    // thing = document.getElementsByTagName('label');
-    let getChoice = document.getElementById('A');
-    isChoiceAOn = getChoice.value;
-    console.log(isChoiceAOn);
-    if (isChoiceAOn === 'on'){
-        // concat string
-        choices += 'A';
-        console.log(choices);
-    } else {
-        // concat string
-        choices += 'B';
-        console.log(choices);
-    }
-    // let stuff = document.getElementsByName('radios').values;
-    // console.log(stuff)
+    currentChoice = buttonA.checked ? buttonA.value : buttonB.checked ? buttonB.value : '';
+    choiceHistory += currentChoice;
+    console.log("currentChoice: " + currentChoice);
+    console.log("choiceHistory: " + choiceHistory);
 
 
     // local variables

@@ -201,5 +201,7 @@ function nextPrompt() {
 
             break;
     }
+    buttonA.checked = false;
+    buttonB.checked = false;
 
 }

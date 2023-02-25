@@ -7,9 +7,9 @@
     <script src="game.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
-<script>
+<!-- <script>
     console.log(document.getElementById("A").value);
-</script>
+</script> -->
 
 <body>
 
@@ -26,26 +26,26 @@
     <!-- Main -->
     <main class="gradientBG">
 
-        <h1>New Game Time</h1>
         <!-- Prompt -->
-        <span id="question">
-            Prompt 1
-        </span>
+        <!-- need to either save global variable in avatar page or query database for name and home planet -->
+        <h1 id="question">
+            You, ALIEN NAME, secretly leave HOME PLANET after an invasion from the Tleilaxu planet.  Why did you leave?
+        </h1>
         <table>
             <!-- <form method="GET" action="http://localhost:8080"> -->
                     <tr>
                         <td>
                             <input type="radio" class="choice" name="radios" id="A" value="A">
-                            <label for="A" id="choiceALabel">Choice One</label>
+                            <label for="A" id="choiceALabel">Gather a band of hooligans to return an attack on the Tleilaxu</label>
                         </td>
                         <td>
                             <input type="radio" class="choice" name="radios" id="B" value="B">
-                            <label for="B" id="choiceBLabel">Choice Two</label>
+                            <label for="B" id="choiceBLabel">Run away to find true alien love and ignore the wrecking realities of home.</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <button onClick="nextPrompt()">Next!</button>
+                            <button id="gameButton" onClick="nextPrompt()">Next!</button>
                         </td>
                     </tr>
             <!-- </form> -->

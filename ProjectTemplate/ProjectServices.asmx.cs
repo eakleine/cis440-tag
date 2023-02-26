@@ -204,6 +204,35 @@ namespace ProjectTemplate
 			//return id
 			return id;
 		}
+
+		[WebMethod(EnableSession = true)]
+		public void UpdateChoices(string choices)
+		{
+			AllowChange();
+			
+			int id = int.Parse(Session["id"].ToString());
+			
+			string sqlUpdate = "update user_database set choices=@choiceValue where id=@idValue";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlUpdate, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@idValue", id);
+			Console.WriteLine(id);
+			sqlCommand.Parameters.AddWithValue("@choiceValue", HttpUtility.UrlDecode(choices));
+			Console.WriteLine(choices);
+			
+			sqlConnection.Open();
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+			sqlConnection.Close();
+		}
 		
 		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
 		[WebMethod(EnableSession = true)]

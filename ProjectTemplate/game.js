@@ -19,6 +19,9 @@ function endGame(){
     document.getElementById("gameButton").innerHTML = "Thanks for playing!"
     document.getElementById("gameButton").src = 'index.html'
 
+    // save story choices to database
+    saveChoices(choiceHistory);
+
     // close app? or just link button to home page?
 
 }
@@ -204,4 +207,27 @@ function nextPrompt() {
     buttonA.checked = false;
     buttonB.checked = false;
 
+}
+
+function saveChoices(choices) {
+    var webMethod = "ProjectServices.asmx/UpdateChoices";
+			var parameters = "{\"choices\":\"" + encodeURI(choices) + "\"}";
+
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						
+					}
+					
+				},
+				error: function (e) {
+					alert("failed");
+				}
+			});
 }

@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Customize Your Character</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link href="styles.css" rel="stylesheet">
     <style>
@@ -21,6 +22,96 @@
         }
         
     </style>
+    <script>
+        var alienChoice;
+        var planetChoice;
+        var name;
+        var avatar = '';
+        var planet = '';
+
+        function choiceProcess(){
+            
+            name = document.getElementById("alienName").value;
+            // alert(name);
+
+            var radios1 = document.getElementsByName('alienChosen');
+
+            for (var i = 0, length = radios1.length; i < length; i++) {
+                if (radios1[i].checked) {
+                    // do whatever you want with the checked radio
+                    // alert(radios1[i].value);
+                    alienChoice = radios1[i].value;
+
+                    // alert(alienChoice);
+                    
+                    if (alienChoice == 1){
+                        avatar = 'alien1';
+                    } else if (alienChoice == 2){
+                        avatar = 'alien2';
+                    } else {
+                        avatar = 'alien3';
+                    }
+                    
+                    // alert(avatar)
+                    
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            
+            var radios2 = document.getElementsByName('planetChosen');
+            
+            for (var i = 0, length = radios2.length; i < length; i++) {
+                if (radios2[i].checked) {
+                    // do whatever you want with the checked radio
+                    // alert(radios2[i].value);
+                    planetChoice = radios2[i].value;
+
+                    // alert(planetChoice);
+                    
+                    if (planetChoice == 1){
+                        planet = 'planet1';
+                    } else if (planetChoice == 2){
+                        planet = 'planet2';
+                    } else {
+                        planet = 'planet3';
+                    }
+
+                    // alert(planet)
+    
+                    // only one radio can be logically checked, don't check the rest
+                    break;
+                }
+            }
+            
+            saveUserChoice();
+            
+        }
+        
+        function saveUserChoice() {
+            
+            // alert(name + avatar + planet);
+            
+            webMethod = "ProjectServices.asmx/StoreUserCharacter";
+            parameters = "{\"avatar\":\"" + encodeURI(avatar) + "\",\"name\":\"" + encodeURI(name) + "\",\"planet\":\"" +
+                encodeURI(planet) + "\"}";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    alert("Saved Character Choice!");
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            })
+        }
+        
+    </script>
 </head>
 
 <body>
@@ -62,28 +153,25 @@
                     <td>
                         <div>
                             <label id="alien1" for="a1">
-                                <div><img src="Figrin-dan.jpg" width="200" class="avatarPics" alt="Alien 1"></div>
-                                Figrin-dan
+                                <div><img src="triangle.png" width="200" class="avatarPics" alt="Alien 1"></div>
                             </label>
-                            <input type="radio" name="alienChosen" id="a1" value="" class="">
+                            <input type="radio" name="alienChosen" id="a1" value=1 class="">
                         </div>
                     </td>
                     <td>
                         <div>
                             <label id="alien2" for="a2">
-                                <div><img src="DarthVader.jpg" height="242" width="200" class="avatarPics" alt="Alien 2"></div>
-                                DarthVader
+                                <div><img src="circle.png" width="200" class="avatarPics" alt="Alien 2"></div>
                             </label>
-                            <input type="radio" name="alienChosen" id="a2" value="" class="">
+                            <input type="radio" name="alienChosen" id="a2" value=2 class="">
                         </div>
                     </td>
                     <td>
                         <div>
                             <label id="alien3" for="a3">
-                                <div><img src="Yoda.jpg" width="200" class="avatarPics" alt="Alien 3"></div>
-                                Yoda
+                                <div><img src="square.png" width="200" class="avatarPics" alt="Alien 3"></div>
                             </label>
-                            <input type="radio" name="alienChosen" id="a3" value="" class="">
+                            <input type="radio" name="alienChosen" id="a3" value=3 class="">
                         </div>
                     </td>
                 </tr>
@@ -95,7 +183,7 @@
                             <label id="planet1" for="p1">
                                 <div><img src="triangle.png" width="200" class="avatarPics" alt="Planet 1"></div>
                             </label>
-                            <input type="radio" name="planetChosen" id="a1" value="" class="">
+                            <input type="radio" name="planetChosen" id="p1" value=1 class="">
                         </div>
                     </td>
                     <td>
@@ -103,7 +191,7 @@
                             <label id="planet2" for="p2">
                                 <div><img src="circle.png" width="200" class="avatarPics" alt="Planet 2"></div>
                             </label>
-                            <input type="radio" name="planetChosen" id="p2" value="" class="">
+                            <input type="radio" name="planetChosen" id="p2" value=2 class="">
                         </div>
                     </td>
                     <td>
@@ -111,14 +199,15 @@
                             <label id="planet3" for="p3">
                                 <div><img src="square.png" width="200" class="avatarPics" alt="Planet 3"></div>
                             </label>
-                            <input type="radio" name="planetChosen" id="p3" value="" class="">
+                            <input type="radio" name="planetChosen" id="p3" value=3 class="">
                         </div>
                     </td>
                 </tr>
                 <!-- Submit -->
                 <tr>
                     <td colspan="3">
-                        <input type="submit" id="submit" class="avatarPageButtons" value="Save Changes">
+                        <input onclick="choiceProcess()" type="submit" id="submit" class="avatarPageButtons" 
+                               value="Save Changes">
                    </td>
                 </tr>
             </table>

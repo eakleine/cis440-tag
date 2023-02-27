@@ -177,6 +177,36 @@ namespace ProjectTemplate
 			sqlConnection.Close(); 
 		}
 		
+		public void StoreUserCharacter(string avatar, string name, string planet)
+		{
+			// AllowChange();
+
+			string sqlSelect = "insert into characters (avatar, name, planet) values (@avatarValue, @nameValue, @planetValue);";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@avatarValue", avatar);
+			sqlCommand.Parameters.AddWithValue("@nameValue", name);
+			sqlCommand.Parameters.AddWithValue("@planetValue", planet);
+			
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
+		}
+		
 		
 		[WebMethod(EnableSession = true)]
 		public int LoadCurrentAccount()
@@ -287,11 +317,7 @@ namespace ProjectTemplate
 			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
 			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
-
-			//this time, we're not using a data adapter to fill a data table.  We're just
-			//opening the connection, telling our command to "executescalar" which says basically
-			//execute the query and just hand me back the number the query returns (the ID, remember?).
-			//don't forget to close the connection!
+			
 			sqlConnection.Open();
 			//we're using a try/catch so that if the query errors out we can handle it gracefully
 			//by closing the connection and moving on
@@ -307,71 +333,7 @@ namespace ProjectTemplate
 			}
 			sqlConnection.Close();
 		}
-
-		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
-		[WebMethod(EnableSession = true)]
-		public Account[] GetAccounts()
-		{
-			//check out the return type.  It's an array of Account objects.  You can look at our custom Account class in this solution to see that it's 
-			//just a container for public class-level variables.  It's a simple container that asp.net will have no trouble converting into json.  When we return
-			//sets of information, it's a good idea to create a custom container class to represent instances (or rows) of that information, and then return an array of those objects.  
-			//Keeps everything simple.
-
-			//WE ONLY SHARE ACCOUNTS WITH LOGGED IN USERS!
-			if (Session["id"] != null)
-			{
-				DataTable sqlDt = new DataTable("accounts");
-
-				// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-				string sqlSelect = "select id, userid, pass, firstname, lastname, email from table_value where active=1 order by lastname";
-
-				MySqlConnection sqlConnection = new MySqlConnection(getConString());
-				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-				//gonna use this to fill a data table
-				MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-				//filling the data table
-				sqlDa.Fill(sqlDt);
-
-				//loop through each row in the dataset, creating instances
-				//of our container class Account.  Fill each account with
-				//data from the rows, then dump them in a list.
-				List<Account> accounts = new List<Account>();
-				for (int i = 0; i < sqlDt.Rows.Count; i++)
-				{
-					//only share user id and pass info with admins!
-					if (Convert.ToInt32(Session["admin"]) == 1)
-					{
-						accounts.Add(new Account
-						{
-							id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
-							userId = sqlDt.Rows[i]["userid"].ToString(),
-							password = sqlDt.Rows[i]["pass"].ToString(),
-							firstName = sqlDt.Rows[i]["firstname"].ToString(),
-							lastName = sqlDt.Rows[i]["lastname"].ToString(),
-							email = sqlDt.Rows[i]["email"].ToString()
-						});
-					}
-					else
-					{
-						accounts.Add(new Account
-						{
-							id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
-							firstName = sqlDt.Rows[i]["firstname"].ToString(),
-							lastName = sqlDt.Rows[i]["lastname"].ToString(),
-							email = sqlDt.Rows[i]["email"].ToString()
-						});
-					}
-				}
-				//convert the list of accounts to an array and return!
-				return accounts.ToArray();
-			}
-			else
-			{
-				//if they're not logged in, return an empty array
-				return new Account[0];
-			}
-		}
+		
 
 		//EXAMPLE OF AN UPDATE QUERY WITH PARAMS PASSED IN
 		[WebMethod(EnableSession = true)]
@@ -408,71 +370,6 @@ namespace ProjectTemplate
 				sqlConnection.Close();
 			}
 		}
-		
-
-		//EXAMPLE OF A SELECT, AND RETURNING "COMPLEX" DATA TYPES
-		[WebMethod(EnableSession = true)]
-		public Account[] GetAccountRequests()
-		{//LOGIC: get all account requests and return them!
-			if (Convert.ToInt32(Session["admin"]) == 1)
-			{
-				DataTable sqlDt = new DataTable("accountrequests");
-
-				// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-				//requests just have active set to 0
-				string sqlSelect = "select id, userid, pass, firstname, lastname, email from table_value where active=0 order by lastname";
-
-				MySqlConnection sqlConnection = new MySqlConnection(getConString());
-				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-				MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-				sqlDa.Fill(sqlDt);
-
-				List<Account> accountRequests = new List<Account>();
-				for (int i = 0; i < sqlDt.Rows.Count; i++)
-				{
-					accountRequests.Add(new Account
-					{
-						id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
-						firstName = sqlDt.Rows[i]["firstname"].ToString(),
-						lastName = sqlDt.Rows[i]["lastname"].ToString(),
-						email = sqlDt.Rows[i]["email"].ToString()
-					});
-				}
-				//convert the list of accounts to an array and return!
-				return accountRequests.ToArray();
-			}
-			else {
-				return new Account[0];
-			}
-		}
-
-		//EXAMPLE OF A DELETE QUERY
-		[WebMethod(EnableSession = true)]
-		public void DeleteAccount(string id)
-		{
-			if (Convert.ToInt32(Session["admin"]) == 1)
-			{
-				// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-				//this is a simple update, with parameters to pass in values
-				string sqlSelect = "delete from table_value where id=@idValue";
-
-				MySqlConnection sqlConnection = new MySqlConnection(getConString());
-				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-				sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
-
-				sqlConnection.Open();
-				try
-				{
-					sqlCommand.ExecuteNonQuery();
-				}
-				catch (Exception e)
-				{
-				}
-				sqlConnection.Close();
-			}
-		}
 
 		//EXAMPLE OF AN UPDATE QUERY
 		[WebMethod(EnableSession = true)]
@@ -497,33 +394,6 @@ namespace ProjectTemplate
 				catch (Exception e)
 				{
 				}
-				sqlConnection.Close();
-			}
-		}
-
-		//EXAMPLE OF A DELETE QUERY
-		[WebMethod(EnableSession = true)]
-		public void RejectAccount(string id)
-		{
-			if (Convert.ToInt32(Session["admin"]) == 1)
-			{
-				// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB".ConnectionString;
-				string sqlSelect = "delete from table_value where id=@idValue";
-
-				MySqlConnection sqlConnection = new MySqlConnection(getConString());
-				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-				sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
-
-				sqlConnection.Open();
-				try
-				{
-					sqlCommand.ExecuteNonQuery();
-				}
-				catch (Exception e)
-				{
-				}
-
 				sqlConnection.Close();
 			}
 		}

@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>Customize Your Character</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <link href="styles.css" rel="stylesheet">
     <style>
         th {
@@ -45,11 +44,11 @@
                     // alert(alienChoice);
                     
                     if (alienChoice == 1){
-                        avatar = 'alien1';
+                        avatar = 'alien1';  // can modify new alien name here
                     } else if (alienChoice == 2){
-                        avatar = 'alien2';
+                        avatar = 'alien2';  // can modify new alien name here
                     } else {
-                        avatar = 'alien3';
+                        avatar = 'alien3';  // can modify new alien name here
                     }
                     
                     // alert(avatar)
@@ -70,30 +69,28 @@
                     // alert(planetChoice);
                     
                     if (planetChoice == 1){
-                        planet = 'planet1';
+                        planet = 'planet1';  // can modify new planet name here
                     } else if (planetChoice == 2){
-                        planet = 'planet2';
+                        planet = 'planet2';  // can modify new planet name here
                     } else {
-                        planet = 'planet3';
+                        planet = 'planet3';  // can modify new planet name here
                     }
 
-                    // alert(planet)
-    
+                    saveCharaterChanges();
+                    
                     // only one radio can be logically checked, don't check the rest
                     break;
                 }
             }
             
-            saveUserChoice();
-            
         }
         
-        function saveUserChoice() {
+        function saveCharaterChanges(){
             
-            // alert(name + avatar + planet);
-            
-            webMethod = "ProjectServices.asmx/StoreUserCharacter";
-            parameters = "{\"avatar\":\"" + encodeURI(avatar) + "\",\"name\":\"" + encodeURI(name) + "\",\"planet\":\"" +
+            alert(name + avatar + planet);
+
+            var webMethod = "ProjectServices.asmx/StoreUserCharacter";
+            var parameters = "{\"avatar\":\"" + encodeURI(avatar) + "\",\"name\":\"" + encodeURI(name) + "\",\"planet\":\"" +
                 encodeURI(planet) + "\"}";
 
             $.ajax({
@@ -103,13 +100,14 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    alert("Saved Character Choice!");
+                    alert("Character Choice Saved!");
                 },
                 error: function (e) {
                     alert("boo...");
                 }
             })
         }
+        
         
     </script>
 </head>

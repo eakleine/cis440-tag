@@ -12,7 +12,9 @@
         var userFname = '';
         var userLname = '';
         var userEmail = '';
+        var userCharID = 0;
         var accountsArray;
+        var characterResult;
 
         function CurrentAccountDisplay() {
 
@@ -46,8 +48,9 @@
                                             userFname = accountsArray[i].firstName;
                                             userLname = accountsArray[i].lastName;
                                             userEmail = accountsArray[i].email;
+                                            userCharID = accountsArray[i].charID;
                                             
-                                            console.log(userName, userPass, userFname, userLname, userEmail);
+                                            console.log(userName, userPass, userFname, userLname, userEmail, userCharID);
                                             console.log('Storing Current User data success!')
                                             
                                             console.log('Displaying Data...')
@@ -57,7 +60,7 @@
                                             document.getElementById('userLname').innerHTML = userLname;
                                             document.getElementById('userEmail').innerHTML = userEmail;
 
-                                            document.getElementById('avatar').innerHTML = 'Figrin D’an and the Modal Nodes';
+                                            getCharacterData();
                                             
                                             break;
                                         }
@@ -79,6 +82,36 @@
                     alert("boo...");
                 }
             });
+        }
+        
+        function getCharacterData(){
+            
+            console.log("loading character data...");
+            
+            webMethod = "ProjectServices.asmx/LoadCharacter";
+            parameters = "{\"charID\":\"" + encodeURI(userCharID) + "\"}";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d.length > 0) {
+                        characterResult = msg.d;
+                        console.log(characterResult);
+                        document.getElementById('character').innerHTML = characterResult;
+                    }
+                    else {
+                        alert('loading failed');
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+            
         }
 
         function LogOff() {
@@ -148,8 +181,8 @@
              <span id="userEmail" name="email"></span><br /><br />
          </section>
          <section>
-             <label>Avatar: </label>
-             <span id="avatar" name="avatar"></span><br /><br />
+             <label>Character: </label>
+             <span id="character" name="character"></span><br /><br />
          </section>
     </main>
 

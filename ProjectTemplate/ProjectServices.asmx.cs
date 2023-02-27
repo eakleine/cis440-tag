@@ -75,7 +75,7 @@ namespace ProjectTemplate
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//here's our query.  A basic select with nothing fancy.  Note the parameters that begin with @
 			//NOTICE: we added admin to what we pull, so that we can store it along with the id in the session
-			string sqlSelect = "SELECT id, admin FROM user_database WHERE userid=@idValue and pass=@passValue";
+			string sqlSelect = "SELECT id FROM user_database WHERE userid=@idValue and pass=@passValue";
 
 			//set up our connection object to be ready to use our connection string
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
@@ -103,7 +103,7 @@ namespace ProjectTemplate
 				//so we can check those values later on other method calls to see if they 
 				//are 1) logged in at all, and 2) and admin or not
 				Session["id"] = sqlDt.Rows[0]["id"];
-				Session["admin"] = sqlDt.Rows[0]["admin"];
+				// Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
@@ -177,18 +177,19 @@ namespace ProjectTemplate
 			sqlConnection.Close(); 
 		}
 		
+		[WebMethod(EnableSession = true)]
 		public void StoreUserCharacter(string avatar, string name, string planet)
 		{
 			// AllowChange();
-
+			
 			string sqlSelect = "insert into characters (avatar, name, planet) values (@avatarValue, @nameValue, @planetValue);";
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 			
-			sqlCommand.Parameters.AddWithValue("@avatarValue", avatar);
-			sqlCommand.Parameters.AddWithValue("@nameValue", name);
-			sqlCommand.Parameters.AddWithValue("@planetValue", planet);
+			sqlCommand.Parameters.AddWithValue("@avatarValue", HttpUtility.UrlDecode(avatar));
+			sqlCommand.Parameters.AddWithValue("@nameValue", HttpUtility.UrlDecode(name));
+			sqlCommand.Parameters.AddWithValue("@planetValue", HttpUtility.UrlDecode(planet));
 			
 			sqlConnection.Open();
 			//we're using a try/catch so that if the query errors out we can handle it gracefully
@@ -203,8 +204,78 @@ namespace ProjectTemplate
 			{
 				Console.WriteLine(e);
 			}
+			sqlConnection.Close();
+			
+			// update user characterID in user_database table
+			updateUserCharacter();
 
-			sqlConnection.Close(); 
+		}
+		
+		//EXAMPLE OF AN UPDATE QUERY WITH PARAMS PASSED IN
+		[WebMethod(EnableSession = true)]
+		public void updateUserCharacter()
+		{
+			int charId = LoadCurrentCharacterID();
+			int userId = LoadCurrentAccount();
+			
+			Console.WriteLine(charId + " " + userId);
+
+			string sqlSelect = "update user_database set charID=@charIDValue where id=@userIDValue;";
+			                  
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@charIDValue", charId);
+			sqlCommand.Parameters.AddWithValue("@userIDValue", userId);
+			
+
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+			}
+			sqlConnection.Close();
+		}
+		
+		//EXAMPLE OF AN INSERT QUERY WITH PARAMS PASSED IN.  BONUS GETTING THE INSERTED ID FROM THE DB!
+		[WebMethod(EnableSession = true)]
+		public void RequestAccount(string uid, string pass, string firstName, string lastName, string email)
+		{
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
+			//does is tell mySql server to return the primary key of the last inserted row.
+			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email, charID, choices) " +
+			                   "values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue, 1, null); SELECT LAST_INSERT_ID();";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
+			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
+			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
+			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
+			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
+			
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			try
+			{
+				int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar());
+				//here, you could use this accountID for additional queries regarding
+				//the requested account.  Really this is just an example to show you
+				//a query where you get the primary key of the inserted row back from
+				//the database!
+			}
+			catch (Exception e) {
+			}
+			sqlConnection.Close();
 		}
 		
 		
@@ -233,6 +304,66 @@ namespace ProjectTemplate
 			}
 			//return id
 			return id;
+		}
+		
+		[WebMethod(EnableSession = true)]
+		public int LoadCurrentCharacterID()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select charID from characters ORDER BY charID DESC LIMIT 1;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			int charid = 0;
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				charid = Convert.ToInt32(sqlDt.Rows[i]["charID"]);
+				Console.WriteLine(charid);
+			}
+			//return charid
+			return charid;
+		}
+		
+		[WebMethod(EnableSession = true)]
+		public string LoadCharacter(int charID)
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select avatar, planet from characters where charID=@charIDValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@charIDValue", charID);
+
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			string character_result = "";
+			
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				string avatar = sqlDt.Rows[i]["avatar"].ToString();
+				string planet = sqlDt.Rows[i]["planet"].ToString();
+				character_result = avatar + ' ' + planet;
+				Console.WriteLine(character_result);
+			}
+			//return character_result
+			return character_result;
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -271,7 +402,7 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select id, userid, pass, firstname, lastname, email from user_database";
+			string sqlSelect = "select id, userid, pass, firstname, lastname, email, charID from user_database;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -291,49 +422,14 @@ namespace ProjectTemplate
 					password = sqlDt.Rows[i]["pass"].ToString(),
 					firstName = sqlDt.Rows[i]["firstname"].ToString(),
 					lastName = sqlDt.Rows[i]["lastname"].ToString(),
-					email = sqlDt.Rows[i]["email"].ToString()
+					email = sqlDt.Rows[i]["email"].ToString(),
+					charID = Convert.ToInt32(sqlDt.Rows[i]["charID"])
 				});
 			}
 			//convert the list of accounts to an array and return!
 			return accounts.ToArray();
 		}
 
-		//EXAMPLE OF AN INSERT QUERY WITH PARAMS PASSED IN.  BONUS GETTING THE INSERTED ID FROM THE DB!
-		[WebMethod(EnableSession = true)]
-		public void RequestAccount(string uid, string pass, string firstName, string lastName, string email)
-		{
-			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
-			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email, admin, charID) " +
-				"values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue, 0, 1); SELECT LAST_INSERT_ID();";
-			// ToDo: creating a request table and insert into request table instead of user_database
-			
-			MySqlConnection sqlConnection = new MySqlConnection(getConString());
-			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
-			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
-			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
-			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
-			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
-			
-			sqlConnection.Open();
-			//we're using a try/catch so that if the query errors out we can handle it gracefully
-			//by closing the connection and moving on
-			try
-			{
-				int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar());
-				//here, you could use this accountID for additional queries regarding
-				//the requested account.  Really this is just an example to show you
-				//a query where you get the primary key of the inserted row back from
-				//the database!
-			}
-			catch (Exception e) {
-			}
-			sqlConnection.Close();
-		}
-		
 
 		//EXAMPLE OF AN UPDATE QUERY WITH PARAMS PASSED IN
 		[WebMethod(EnableSession = true)]
@@ -360,33 +456,6 @@ namespace ProjectTemplate
 				sqlConnection.Open();
 				//we're using a try/catch so that if the query errors out we can handle it gracefully
 				//by closing the connection and moving on
-				try
-				{
-					sqlCommand.ExecuteNonQuery();
-				}
-				catch (Exception e)
-				{
-				}
-				sqlConnection.Close();
-			}
-		}
-
-		//EXAMPLE OF AN UPDATE QUERY
-		[WebMethod(EnableSession = true)]
-		public void ActivateAccount(string id)
-		{
-			if (Convert.ToInt32(Session["admin"]) == 1)
-			{
-				// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-				//this is a simple update, with parameters to pass in values
-				string sqlSelect = "update table_value set active=1 where id=@idValue";
-
-				MySqlConnection sqlConnection = new MySqlConnection(getConString());
-				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-				sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
-
-				sqlConnection.Open();
 				try
 				{
 					sqlCommand.ExecuteNonQuery();

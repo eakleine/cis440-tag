@@ -46,7 +46,8 @@
 				success: function (msg) {
 					if (msg.d) {
 						//server replied true, so direct the user to the dashboard
-						window.open('dashboard.html', '_self')
+						clearLogon();
+						window.open('dashboard.html', '_self');
 					}
 					else {
 						alert("logon failed");
@@ -88,7 +89,7 @@
 			<br>
 			<div>
 				<input type="reset" value="Clear">
-				<button class="goButton" type="submit">Go!</button>
+				<button type="submit">Go!</button>
 			</div>	  
 		</form>
 	</main>

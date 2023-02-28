@@ -6,10 +6,12 @@
     <title>Customize Your Character</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="styles.css" rel="stylesheet">
+    
     <style>
         th {
-            padding-top: 15px;
+            padding-top: 40px;
             padding-bottom: 10px;
+            text-align: center;
         }
         
         #alienName {
@@ -21,6 +23,7 @@
         }
         
     </style>
+
     <script>
         var alienChoice;
         var planetChoice;
@@ -135,14 +138,43 @@
 
         <h1>Update your Character</h1>
         <h2>Which alien will you be today?</h2>
-        
-        <!-- Space Gawn -->
-        <img id="rocketShip" class="center" src="alienBoi.gif" /> 
 
         <form>
             <table class="alienOptions">
-                <th>
-                    What's your name?
+                <th colspan="3">Choose your Avatar</th>
+                <!-- Aliens -->
+                <tr>
+                    <td>
+                        <div>
+                            <label id="alien1" for="a1">
+                                <div><img src="alien_w_tha_SUPREME_on.png" width="250" class="avatarPics" alt="Alien 1"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a1" value=1 class="">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div>
+                            <label id="alien2" for="a2">
+                                <div><img src="booger_man_too_boogie.png" width="250" class="avatarPics" alt="Alien 2"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a2" value=2 class="">
+                        </div>
+                    </td>
+
+                    <td>
+                        <div>
+                            <label id="alien3" for="a3">
+                                <div><img src="homegurl_w_tha_LIPS.png" width="250" class="avatarPics" alt="Alien 3"></div>
+                            </label>
+                            <input type="radio" name="alienChosen" id="a3" value=3 class="">
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Name ? -->
+                <th colspan="3">
+                    Change your characters name!
                 </th>
                 <tr>
                     <td colspan="3">
@@ -151,41 +183,14 @@
                         </div>
                     </td>
                 </tr>
-                <th>Choose your Avatar</th>
-                <!-- Aliens -->
-                <tr>
-                    <td>
-                        <div>
-                            <label id="alien1" for="a1">
-                                <div><img src="triangle.png" width="200" class="avatarPics" alt="Alien 1"></div>
-                            </label>
-                            <input type="radio" name="alienChosen" id="a1" value=1 class="">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <label id="alien2" for="a2">
-                                <div><img src="circle.png" width="200" class="avatarPics" alt="Alien 2"></div>
-                            </label>
-                            <input type="radio" name="alienChosen" id="a2" value=2 class="">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <label id="alien3" for="a3">
-                                <div><img src="square.png" width="200" class="avatarPics" alt="Alien 3"></div>
-                            </label>
-                            <input type="radio" name="alienChosen" id="a3" value=3 class="">
-                        </div>
-                    </td>
-                </tr>
+
                 <!-- Planet -->
-                <th>Choose your Home Planet</th>
+                <th colspan="3">Choose your Home Planet</th>
                 <tr>
                     <td>
                         <div>
                             <label id="planet1" for="p1">
-                                <div><img src="triangle.png" width="200" class="avatarPics" alt="Planet 1"></div>
+                                <div><img src="red_p_dawg.png" width="200" class="avatarPics" alt="Planet 1"></div>
                             </label>
                             <input type="radio" name="planetChosen" id="p1" value=1 class="">
                         </div>
@@ -193,7 +198,7 @@
                     <td>
                         <div>
                             <label id="planet2" for="p2">
-                                <div><img src="circle.png" width="200" class="avatarPics" alt="Planet 2"></div>
+                                <div><img src="teal_p_dawg.png" width="200" class="avatarPics" alt="Planet 2"></div>
                             </label>
                             <input type="radio" name="planetChosen" id="p2" value=2 class="">
                         </div>
@@ -201,7 +206,7 @@
                     <td>
                         <div>
                             <label id="planet3" for="p3">
-                                <div><img src="square.png" width="200" class="avatarPics" alt="Planet 3"></div>
+                                <div><img src="orange_p_dawg.png" width="200" class="avatarPics" alt="Planet 3"></div>
                             </label>
                             <input type="radio" name="planetChosen" id="p3" value=3 class="">
                         </div>

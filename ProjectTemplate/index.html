@@ -65,8 +65,8 @@
 <body>
 	<header>
 		<nav>
-			<a id="leftAlign">Welcome</a>
-			<a id="rightAlign" href="help.html">Help</a>
+            <a id="leftAlign">Log In</a>
+            <a class="navLink" id="rightAlign" href="help.html">Help</a>
 		</nav>
 	</header>
 
@@ -79,16 +79,16 @@
 			<br>
 			<section>
 				<label>Username</label><br />
-				<input type="text" id="logonId" name="account" /><br /><br />
+				<input class="textInput" type="text" id="logonId" name="account" required/><br /><br />
 			</section>
 			<section>
 				<label>Password</label><br />
-				<input type="password" id="logonPassword" name="password" /><br /><br />
+				<input class="textInput" type="password" id="logonPassword" name="password" required/><br /><br />
 			</section>
 			<br>
 			<div>
-				<input class="button" type="reset" value="Clear">
-				<button class="button" type="submit">Go!</button>
+				<input class="button" id="formButton"  type="reset" value="Clear">
+				<button class="button" id="formButton" type="submit">Go!</button>
 			</div>	  
 		</form>
 	</main>

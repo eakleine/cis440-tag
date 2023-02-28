@@ -17,7 +17,7 @@
         }
         
         #submit {
-            font-size: 25px;
+            font-size: 20px;
         }
         
     </style>
@@ -101,6 +101,7 @@
                 dataType: "json",
                 success: function (msg) {
                     alert("Character Choice Saved!");
+                    clearChoices();
                 },
                 error: function (e) {
                     alert("boo...");
@@ -108,6 +109,11 @@
             })
         }
         
+        function clearChoices(){
+            $('#alienName').val("");
+            $('input[name=alienChosen]').prop('checked',false);
+            $('input[name=planetChosen]').prop('checked',false);
+        }
         
     </script>
 </head>
@@ -203,10 +209,10 @@
                 </tr>
                 <!-- Submit -->
                 <tr>
-                    <td colspan="3">
-                        <input onclick="choiceProcess()" type="submit" id="submit" class="avatarPageButtons" 
-                               value="Save Changes">
-                   </td>
+<!--                    <td colspan="3">-->
+<!--                        <input onclick="choiceProcess()" type="submit" id="submit" class="button" -->
+<!--                               value="Save Changes">-->
+<!--                   </td>-->
                 </tr>
             </table>
     
@@ -214,7 +220,10 @@
 
         <!-- Char and Start -->
         <ul id="characterNav">
-            <!-- <li><a href ="avatar_creator.html">Customize Your Character!</a></li> -->
+            <li>
+                <input onclick="choiceProcess()" type="submit" id="submit" class="button"
+                       value="Save Changes">
+            </li>
             <li id="start"><a href="gameDisplay.html">Start New Game</a></li>
         </ul>
 

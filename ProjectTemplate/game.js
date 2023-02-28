@@ -12,12 +12,21 @@ function endGame() {
     console.log(story);
 
     // function to print story for user
-    document.getElementById('question').innerHTML = `Recap:\n${story}`;
+    document.getElementById('recap').innerHTML = `Your Story: ${story}`;
 
-    // document.createElement(span);
+
+    //create link to home page
+
+    // document.createElement(a);
+    // document.body.appendChild(a);
+    // a.textContent = "Thanks for Playing!";
+    // a.href = "index.html"
+    // a.class = "button";
     // span.innerHTML(story);
-    document.getElementById("gameButton").innerHTML = "Thanks for playing!"
-    document.getElementById("gameButton").src = 'index.html'
+    // document.getElementById("gameButton").innerHTML = "Thanks for playing!";
+    // document.getElementById("gameButton").setAttribute = ("onClick", "index.html");
+
+
 
     // save story choices to database
     saveChoices(choiceHistory);
@@ -104,8 +113,8 @@ function nextPrompt() {
         case 'BA':
             document.getElementById('question').innerHTML = "After going on a date with this alien\
              and matching you start to notice something odd about her. Her accent isn’t \
-             recognizable and she never tells you where she’s from. Until in your sleep she puts a\
-              knife to your neck. She’s a Tleilaxu spy! You gurgle on your blood pulling your last deaths."
+             recognizable and she never tells you where she’s from. That is, until you fall asleep and she puts a\
+              knife to your neck. She’s a Tleilaxu spy! You gurgle on your blood as you die."
 
             document.getElementById('choiceALabel').remove();
             document.getElementById('A').remove();
@@ -113,7 +122,7 @@ function nextPrompt() {
             document.getElementById('choiceBLabel').remove();
             document.getElementById('B').remove();
 
-            document.getElementById("gameButton").innerHTML = "Too Bad!"
+            document.getElementById("gameButton").innerHTML = "Bummer Summer!"
 
             endGame();
             break;
@@ -134,10 +143,10 @@ function nextPrompt() {
         case 'ABA':
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = 'You get through the asteroid \
-            cluster unharmed. Landing back on {your planet}. You take the fight to the Tleilaxu \
-            base as their are building a large castle. Using the construction as distraction you \
+            cluster unharmed, landing safely on your planet. You take the fight to the Tleilaxu \
+            base as they are building a large castle. Using the construction as a distraction, you \
             are able to sneak up to the Tleilaxu emperor and assassinate him. You broadcast your \
-            victory and lead a global uprising! Finally freeing {your planet}!';
+            victory and lead a global uprising! Your planet is finally free!';
 
             document.getElementById('choiceALabel').remove();
             document.getElementById('A').remove();
@@ -154,8 +163,8 @@ function nextPrompt() {
         case 'ABB':
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = "After a long flight around the asteroid\
-             field back to {your planet} you land near the Tleilaxu castle. As you run to it you \
-             realize your like 1000 years old at this point. You trip over a rock and fall. You scream\
+             field back to your planet, you land near the Tleilaxu castle. As you run to it you \
+             realize you're like 1000 years old at this point. You trip over a rock and fall. You scream\
               out “Help I’ve fallen and can’t get up!”. And the Tleilaxu are more than eager to help.";
 
             document.getElementById('choiceALabel').remove();
@@ -164,7 +173,7 @@ function nextPrompt() {
             document.getElementById('choiceBLabel').remove();
             document.getElementById('B').remove();
 
-            document.getElementById("gameButton").innerHTML = "Bummer Summer!";
+            document.getElementById("gameButton").innerHTML = "So Sad :(";
 
             endGame();
 
@@ -191,7 +200,7 @@ function nextPrompt() {
         case 'BBB':
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = "Sadly what you didn’t realize is that you were a \
-            pity cast for Love Planet, they thought having an alien from {your planet} would boost ratings. So \
+            pity cast for Love Planet, because they thought having an alien from your invaded planet would boost ratings. So \
             no other alien is interested in you, and you die a loner at old age.";
 
             document.getElementById('choiceALabel').remove();

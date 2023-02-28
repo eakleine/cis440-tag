@@ -74,7 +74,7 @@
         
         function saveCharaterChanges(){
             
-            alert(name + avatar + planet);
+            // alert(name + avatar + planet);
 
             var webMethod = "ProjectServices.asmx/StoreUserCharacter";
             var parameters = "{\"avatar\":\"" + encodeURI(avatar) + "\",\"name\":\"" + encodeURI(name) + "\",\"planet\":\"" +

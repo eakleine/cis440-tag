@@ -1,8 +1,11 @@
 html {
-    font-family: 'Dosis', sans-serif;
     background-color: black;
     color: black;
     text-align: center;
+}
+
+* {
+    font-family: 'Dosis', sans-serif;
 }
 
 .center {
@@ -22,6 +25,7 @@ nav {
     float: left;
     color: honeydew;
     padding: 15px;
+    text-decoration: none;
 }
 
 #rightAlign {
@@ -29,6 +33,7 @@ nav {
     float: right;
     color: honeydew;
     padding: 15px;
+    text-decoration: none;
 }
 
 #characterNav {
@@ -76,11 +81,6 @@ ul {
 
 
 /* BLAH */
-.alienOptions {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 h1 {
     font-size: 35px;
     font-style: italic;
@@ -126,7 +126,8 @@ footer {
 
 .button {
     background-color: purple;
-    width: auto;
+    /* width: auto; */
+    
     text-align: center;
     padding: 10px 10px;
     margin: 20px;
@@ -140,6 +141,33 @@ footer {
 
 .button:hover {
     background-color: rgba(128, 0, 128, 0.352);
+}
+
+/* Alien Options */
+.alienOptions {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alienOptions th {
+    padding-top: 40px;
+    text-align: center;
+}
+
+.alienOptions th, div {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+#alienName {
+    height: 35px;
+    border-radius: 25px;
+    padding-left: 10px;
+    text-align: center;
+}
+
+#submit {
+    font-size: 20px;
 }
 
 .alienOptions div img:hover {

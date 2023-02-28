@@ -7,22 +7,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="styles.css" rel="stylesheet">
     
-    <style>
-        th {
-            padding-top: 40px;
-            padding-bottom: 10px;
-            text-align: center;
-        }
-        
-        #alienName {
-            height: 15px;
-        }
-        
-        #submit {
-            font-size: 20px;
-        }
-        
-    </style>
 
     <script>
         var alienChoice;
@@ -47,11 +31,11 @@
                     // alert(alienChoice);
                     
                     if (alienChoice == 1){
-                        avatar = 'alien1';  // can modify new alien name here
+                        avatar = 'Vrelvii';
                     } else if (alienChoice == 2){
-                        avatar = 'alien2';  // can modify new alien name here
+                        avatar = 'Elmath';
                     } else {
-                        avatar = 'alien3';  // can modify new alien name here
+                        avatar = 'William';
                     }
                     
                     // alert(avatar)
@@ -72,11 +56,11 @@
                     // alert(planetChoice);
                     
                     if (planetChoice == 1){
-                        planet = 'planet1';  // can modify new planet name here
+                        planet = 'Olgaid';
                     } else if (planetChoice == 2){
-                        planet = 'planet2';  // can modify new planet name here
+                        planet = 'Dhainzeds';
                     } else {
-                        planet = 'planet3';  // can modify new planet name here
+                        planet = 'Ghaslaek';
                     }
 
                     saveCharaterChanges();
@@ -147,7 +131,8 @@
                     <td>
                         <div>
                             <label id="alien1" for="a1">
-                                <div><img src="alien_w_tha_SUPREME_on.png" width="250" class="avatarPics" alt="Alien 1"></div>
+                                <div><img src="homegurl_w_tha_LIPS.png" width="250" class="avatarPics" alt="Alien 1"></div>
+                                <div>Vrelvii</div>
                             </label>
                             <input type="radio" name="alienChosen" id="a1" value=1 class="">
                         </div>
@@ -157,6 +142,7 @@
                         <div>
                             <label id="alien2" for="a2">
                                 <div><img src="booger_man_too_boogie.png" width="250" class="avatarPics" alt="Alien 2"></div>
+                                <div>Elmath</div>
                             </label>
                             <input type="radio" name="alienChosen" id="a2" value=2 class="">
                         </div>
@@ -165,7 +151,8 @@
                     <td>
                         <div>
                             <label id="alien3" for="a3">
-                                <div><img src="homegurl_w_tha_LIPS.png" width="250" class="avatarPics" alt="Alien 3"></div>
+                                <div><img src="alien_w_tha_SUPREME_on.png" width="250" class="avatarPics" alt="Alien 3"></div>
+                                <div>William</div>
                             </label>
                             <input type="radio" name="alienChosen" id="a3" value=3 class="">
                         </div>
@@ -176,13 +163,13 @@
                 <th colspan="3">
                     Change your characters name!
                 </th>
-                <tr>
-                    <td colspan="3">
-                        <div id="nameInput">
-                            <input type="text" id="alienName">
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div id="nameInput">
+                                <input type="text" id="alienName">
+                            </div>
+                        </td>
+                    </tr>
 
                 <!-- Planet -->
                 <th colspan="3">Choose your Home Planet</th>
@@ -190,7 +177,10 @@
                     <td>
                         <div>
                             <label id="planet1" for="p1">
-                                <div><img src="red_p_dawg.png" width="200" class="avatarPics" alt="Planet 1"></div>
+                                <div>
+                                    <img src="orange_p_dawg.png" width="200" class="avatarPics" alt="Planet 1">
+                                </div>
+                                <div>Ghaslaek</div>
                             </label>
                             <input type="radio" name="planetChosen" id="p1" value=1 class="">
                         </div>
@@ -198,7 +188,10 @@
                     <td>
                         <div>
                             <label id="planet2" for="p2">
-                                <div><img src="teal_p_dawg.png" width="200" class="avatarPics" alt="Planet 2"></div>
+                                <div>
+                                    <img src="teal_p_dawg.png" width="200" class="avatarPics" alt="Planet 2">
+                                </div>
+                                <div>Dhainzeds</div>
                             </label>
                             <input type="radio" name="planetChosen" id="p2" value=2 class="">
                         </div>
@@ -206,7 +199,10 @@
                     <td>
                         <div>
                             <label id="planet3" for="p3">
-                                <div><img src="orange_p_dawg.png" width="200" class="avatarPics" alt="Planet 3"></div>
+                                <div>
+                                    <img src="red_p_dawg.png" width="200" class="avatarPics" alt="Planet 3">
+                                </div>
+                                <div>Olgaid</div>
                             </label>
                             <input type="radio" name="planetChosen" id="p3" value=3 class="">
                         </div>
@@ -229,7 +225,6 @@
                 <input onclick="choiceProcess()" type="submit" id="submit" class="button"
                        value="Save Changes">
             </li>
-            <li id="start"><a class="button" href="gameDisplay.html">Start New Game</a></li>
         </ul>
 
     </main>

@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <title>Gameplay</title>
     <script src="game.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
-<script>
+<!-- <script>
     console.log(document.getElementById("A").value);
-</script>
+</script> -->
 
 <body>
 
@@ -24,32 +25,32 @@
     </header>
 
     <!-- Main -->
-    <main class="gradientBG">
+    <main id="main" class="gradientBG">
 
-        <h1>New Game Time</h1>
         <!-- Prompt -->
-        <span id="question">
-            Prompt 1
-        </span>
+        <!-- need to either save global variable in avatar page or query database for name and home planet -->
+        <h1 id="question">
+            The adventure begins! You secretly leave your home planet after an invasion from the Tleilaxu planet. Why did you leave?
+        </h1>
+        <!-- empty span for when user story is displayed -->
+        <span id="recap"></span>
         <table>
             <!-- <form method="GET" action="http://localhost:8080"> -->
-                    <tr>
-                        <td>
-                            <input type="radio" class="choice" name="radios" id="A" value="A">
-                            <label for="A" id="choiceALabel">Choice One</label>
-                        </td>
-                        <td>
-                            <input type="radio" class="choice" name="radios" id="B" value="B">
-                            <label for="B" id="choiceBLabel">Choice Two</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button onClick="nextPrompt()">Next!</button>
-                        </td>
-                    </tr>
-            <!-- </form> -->
+            <tr>
+                <td class="gameCells">
+                    <input type="radio" class="choice" name="radios" id="A" value="A">
+                    <label for="A" id="choiceALabel">To gather a band of hooligans to return an attack on the
+                        Tleilaxu</label>
+                </td>
+                <td class="gameCells">
+                    <input type="radio" class="choice" name="radios" id="B" value="B">
+                    <label for="B" id="choiceBLabel">To run away to find true alien love and ignore the wrecking realities
+                        of home.</label>
+                </td>
+            </tr>
         </table>
+        <button class="button" id="gameButton" onClick="nextPrompt()">Next!</button>
+        <span id="goodbyeMsg"></span>
     </main>
 
 </body>

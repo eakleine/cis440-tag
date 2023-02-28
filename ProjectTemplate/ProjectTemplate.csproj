@@ -93,13 +93,11 @@
     <Content Include="avatar_creator.html" />
     <Content Include="backlogFunction.html" />
     <Content Include="dashboard.html" />
-    <Content Include="frontendProcessing.js" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="profile.html" />
     <Content Include="ProjectServices.asmx" />
     <Content Include="requestAccount.html" />
-    <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

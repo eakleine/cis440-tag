@@ -13,25 +13,13 @@ function endGame() {
 
     // function to print story for user
     document.getElementById('recap').innerHTML = `Your Story: ${story}`;
+    document.getElementById('goodbyeMsg').innerHTML = `Thanks for playing! \
+    Please logout or return to your profile page`;
 
-
-    //create link to home page
-
-    // document.createElement(a);
-    // document.body.appendChild(a);
-    // a.textContent = "Thanks for Playing!";
-    // a.href = "index.html"
-    // a.class = "button";
-    // span.innerHTML(story);
-    // document.getElementById("gameButton").innerHTML = "Thanks for playing!";
-    // document.getElementById("gameButton").setAttribute = ("onClick", "index.html");
-
-
+    document.getElementById('gameButton').remove();
 
     // save story choices to database
     saveChoices(choiceHistory);
-
-    // close app? or just link button to home page?
 
 }
 
@@ -201,7 +189,7 @@ function nextPrompt() {
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = "Sadly what you didn’t realize is that you were a \
             pity cast for Love Planet, because they thought having an alien from your invaded planet would boost ratings. So \
-            no other alien is interested in you, and you die a loner at old age.";
+            no other alien is interested in you, and you die a loner at an old age.";
 
             document.getElementById('choiceALabel').remove();
             document.getElementById('A').remove();

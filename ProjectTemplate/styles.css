@@ -167,3 +167,15 @@ input[type=password] {
     background-color: rgba(128, 0, 128, 0.352);
     border-radius: 15px;
 }
+
+#goodbyeMsg{
+    font-size:30px;
+    font-family: 'Dosis', sans-serif;
+    font-style:italic;
+    font-weight:bold;
+}
+
+#recap{
+    font-family: 'Dosis', sans-serif;
+    font-size:20px;
+}

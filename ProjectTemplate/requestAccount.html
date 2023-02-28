@@ -90,8 +90,9 @@
 <body>
 	<header>
 		<nav>
-			<a id="leftAlign">Welcome</a>
-			<a id="rightAlign" href="help.html">Help</a>
+            <a id="leftAlign">New Account</a>
+			<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
+            <a class="navLink" id="rightAlign" href="help.html">Help</a>
 		</nav>
 	</header>
 
@@ -103,33 +104,33 @@
         $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
 			<section>
 				<label>Username</label><br />
-				<input type="text" id="newLogonId" name="username" required /><br /><br />
+				<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
 			</section>
 
 			<section>
 				<label>Password</label><br />
-				<input type="password" id="newLogonPassword" name="password" required /><br /><br />
+				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
 			</section>
 
             <section>
 				<label>First Name</label><br />
-				<input type="text" id="newLogonFName" name="fName" required /><br /><br />
+				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
 			</section>
 
             <section>
 				<label>Last Name</label><br />
-				<input type="text" id="newLogonLName" name="lName" required /><br /><br />
+				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
 			</section>
 
             <section>
 				<label>Email</label><br />
-				<input type="text" id="newLogonEmail" name="email" required /><br /><br />
+				<input type="text" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
 			</section>
 
 			<br>
 				  <div>
-					  <input type="reset" value="Clear">
-					  <button class="goButton" type="submit">Go!</button>
+					  <button type="reset" class="button" id="formButton" value="Clear">Clear</button>
+					  <button class="button" id="formButton" type="submit">Go!</button>
 				  </div>
 
 		</form>

@@ -13,6 +13,12 @@ html {
 }
 
 /* NAV */
+.navLink:hover {
+    background-color: rgba(176, 38, 176, 0.671);
+    border-radius: 25px;
+
+}
+
 nav {
     background-color: purple;
     width: auto;
@@ -126,7 +132,7 @@ footer {
 
 .button {
     background-color: purple;
-    /* width: auto; */
+    width: 200px;
     
     text-align: center;
     padding: 10px 10px;
@@ -141,6 +147,16 @@ footer {
 
 .button:hover {
     background-color: rgba(128, 0, 128, 0.352);
+}
+
+#formButton {
+    width: 200px;
+}
+
+#startButton {
+    height: 50px;
+    font-size: 30px;
+    width: 300px;
 }
 
 /* Alien Options */
@@ -174,6 +190,10 @@ footer {
     background-color: rgba(128, 0, 128, 0.352);
     border-radius: 25px;
 
+}
+
+.textInput {
+    text-align: center;
 }
 
 input[type=text],

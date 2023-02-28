@@ -340,7 +340,7 @@ namespace ProjectTemplate
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			// select latest login id
-			string sqlSelect = "select avatar, planet from characters where charID=@charIDValue;";
+			string sqlSelect = "select name from characters where charID=@charIDValue;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -357,9 +357,8 @@ namespace ProjectTemplate
 			
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
-				string avatar = sqlDt.Rows[i]["avatar"].ToString();
-				string planet = sqlDt.Rows[i]["planet"].ToString();
-				character_result = avatar + ' ' + planet;
+				string name = sqlDt.Rows[i]["name"].ToString();
+				character_result = name;
 				Console.WriteLine(character_result);
 			}
 			//return character_result

@@ -33,9 +33,21 @@ nav {
     display: inline-block;
 }
 
+#start,
+#submit {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 #start {
     font-size: 25px;
     width: 400px;
+}
+
+#submit {
+    font-size: 30px;
+    width: 380px;
 }
 
 ul li a {
@@ -51,7 +63,7 @@ ul li a {
 
     /* Curve Edges */
     border-radius: 25px;
-  }
+}
 
 ul {
     list-style-type: none;
@@ -91,7 +103,7 @@ body {
     margin: 0;
     background-repeat: repeat;
     /* background-attachment: fixed; */
-   }
+}
 
 .center {
     display: block;
@@ -101,13 +113,14 @@ body {
 
 #rocketShip {
     padding: 25px;
-  }
+}
 
-  footer {
+footer {
     position: sticky;
 }
 
-.button{
+
+.button {
     background-color: purple;
     width: auto;
     text-align: center;
@@ -120,34 +133,37 @@ body {
     border-radius: 25px;
     border: none;
 }
-.button:hover{
-    background-color:rgba(128, 0, 128, 0.352);
+
+.button:hover {
+    background-color: rgba(128, 0, 128, 0.352);
 }
 
-input[type=text], input[type=password]{
+input[type=text],
+input[type=password] {
     font-family: 'Dosis', sans-serif;
-    border-radius:10px;
-    min-height:25px;
+    border-radius: 10px;
+    min-height: 25px;
     border-style: none;
-    min-width:50%;
+    min-width: 50%;
 }
 
-#gameButton{
-    min-width:200px;
-    margin-left:auto;
-    margin-right:auto;
-    
+#gameButton {
+    min-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
-.gameCells{
-    margin-top:20px;
-    margin-bottom:20px;
+.gameCells {
+    margin-top: 20px;
+    margin-bottom: 20px;
     font-family: 'Dosis', sans-serif;
-    font-size:25px;
-    padding:20px;
-    text-align:left;
+    font-size: 25px;
+    padding: 20px;
+    text-align: left;
 }
-.gameCells:hover{
-    background-color:rgba(128, 0, 128, 0.352);
-    border-radius:15px;
+
+.gameCells:hover {
+    background-color: rgba(128, 0, 128, 0.352);
+    border-radius: 15px;
 }

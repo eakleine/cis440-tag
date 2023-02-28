@@ -6,9 +6,9 @@ var currentChoice = ''
 var choiceHistory = ''
 
 
-function endGame(){
+function endGame() {
     // concat to story one last time
-    story+= document.getElementById('question').innerHTML;
+    story += document.getElementById('question').innerHTML;
     console.log(story);
 
     // function to print story for user
@@ -28,7 +28,7 @@ function endGame(){
 
 function nextPrompt() {
 
-    story+= document.getElementById('question').innerHTML;
+    story += document.getElementById('question').innerHTML;
     console.log(story);
 
     buttonA = document.getElementById('A');
@@ -114,9 +114,11 @@ function nextPrompt() {
             document.getElementById('B').remove();
 
             document.getElementById("gameButton").innerHTML = "Too Bad!"
-            break;
 
             endGame();
+            break;
+
+
         case 'BB':
             document.getElementById('question').innerHTML = "You match with this alien but their eyes\
              are elsewhere, always on their phone talking about how many NeuroLink followers they’ll \
@@ -129,7 +131,7 @@ function nextPrompt() {
             love with another alien on the show.";
             break;
 
-            case 'ABA':
+        case 'ABA':
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = 'You get through the asteroid \
             cluster unharmed. Landing back on {your planet}. You take the fight to the Tleilaxu \
@@ -186,7 +188,7 @@ function nextPrompt() {
 
             break;
 
-            case 'BBB':
+        case 'BBB':
             prompt = document.getElementById('question').innerHTML;
             document.getElementById('question').innerHTML = "Sadly what you didn’t realize is that you were a \
             pity cast for Love Planet, they thought having an alien from {your planet} would boost ratings. So \
@@ -211,23 +213,23 @@ function nextPrompt() {
 
 function saveChoices(choices) {
     var webMethod = "ProjectServices.asmx/UpdateChoices";
-			var parameters = "{\"choices\":\"" + encodeURI(choices) + "\"}";
+    var parameters = "{\"choices\":\"" + encodeURI(choices) + "\"}";
 
-			//jQuery ajax method
-			$.ajax({
-				type: "POST",
-				url: webMethod,
-				data: parameters,
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (msg) {
-					if (msg.d) {
-						
-					}
-					
-				},
-				error: function (e) {
-					alert("failed");
-				}
-			});
+    //jQuery ajax method
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d) {
+
+            }
+
+        },
+        error: function (e) {
+            alert("failed");
+        }
+    });
 }
